@@ -1,0 +1,3 @@
+curl -X POST -H "Content-Type: application/json" -d '{"aeroport_depart_ref": 1, "aeroport_arrivee_ref": 2, "date_depart": "2022-12-01", "date_arrivee": "2022-12-02", "heure_depart": "10:00:00", "heure_arrivee": "12:00:00", "prix": 100, "type": "Economy"}' http://localhost:8000/vols/infos/
+
+curl -X POST -H "Content-Type: application/json" -d '{"aeroport_depart_ref": 3, "aeroport_arrivee_ref": 4, "date_depart": "2022-12-03", "date_arrivee": "2022-12-04", "heure_depart": "14:00:00", "heure_arrivee": "16:00:00", "prix": 200, "type": "Business"}' http://localhost:8000/vols/infos/

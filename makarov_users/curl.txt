@@ -1,0 +1,3 @@
+curl -X POST -H "Content-Type: application/json" -d '{"username": "johndoe", "password": "mypassword", "email": "johndoe@example.com", "is_superuser": false, "argent": 100}' http://localhost:8000/users/infos/
+
+curl -X POST -H "Content-Type: application/json" -d '{"username": "janedoe", "password": "herpassword", "email": "janedoe@example.com", "is_superuser": true, "argent": 200}' http://localhost:8000/users/infos/
