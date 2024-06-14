@@ -40,12 +40,6 @@ services:
     build:
       dockerfile: microservices-compose/Dockerfile
       target: micropy
-    ports:
-      - '8000:8000'
-      - '80:80'
-      - '443:443'
-      - "8222:8222"
-      - "4222:4222"
     networks:
       - bridge_network
     command: python3 script1.py
@@ -54,12 +48,6 @@ services:
     build:
       dockerfile: microservices-compose/Dockerfile
       target: micropy
-    ports:
-      - '8000:8000'
-      - '80:80'
-      - '443:443'
-      - "8222:8222"
-      - "4222:4222"
     networks:
       - bridge_network
     command: python3 script2.py
@@ -68,12 +56,6 @@ services:
     build:
       dockerfile: microservices-compose/Dockerfile
       target: micropy
-    ports:
-      - '8000:8000'
-      - '80:80'
-      - '443:443'
-      - "8222:8222"
-      - "4222:4222"
     networks:
       - bridge_network
     command: python3 script3.py
