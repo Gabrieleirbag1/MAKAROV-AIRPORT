@@ -6,7 +6,6 @@ services:
   web-rest:
     build:
       context: django-compose/app
-      dockerfile: django-compose/app/Dockerfile
       target: builder
     ports: 
       - '8000:8000'
