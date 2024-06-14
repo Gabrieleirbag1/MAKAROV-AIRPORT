@@ -1,5 +1,9 @@
 services:
-  web: 
+
+
+
+
+  web-rest:
     build:
       context: app
       dockerfile: django-compose/app/Dockerfile
@@ -25,6 +29,49 @@ services:
     networks:
       - bridge_networks
 
+  nats:
+    image: nats
+    ports:
+      - "8222:8222"
+      - "4222:4222"
+    networks:
+      - bridge_networks
+
+  micro1:
+    build:
+      dockerfile: microservices-compose/Dockerfile
+      target: micropy
+    ports:
+      - '8000:8000'
+      - '80:80'
+      - '443:443'
+    networks:
+      - bridge_network
+    command: python3 script1.py
+
+  micro2:
+    build:
+      dockerfile: microservices-compose/Dockerfile
+      target: micropy
+    ports:
+      - '8000:8000'
+      - '80:80'
+      - '443:443'
+    networks:
+      - bridge_network
+    command: python3 script2.py
+
+  micro3:
+    build:
+      dockerfile: microservices-compose/Dockerfile
+      target: micropy
+    ports:
+      - '8000:8000'
+      - '80:80'
+      - '443:443'
+    networks:
+      - bridge_network
+    command: python3 script3.py
 
 
 networks:
