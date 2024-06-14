@@ -23,7 +23,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     volumes:
-      - /home/volume:/var/lib/mysql
+      - db-data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
@@ -85,4 +85,6 @@ networks:
     driver: bridge
 
 volumes:
+  db-data:
+    name: "maria-data"
 
