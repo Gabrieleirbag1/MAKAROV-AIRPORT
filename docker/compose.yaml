@@ -5,7 +5,7 @@ services:
 
   web-rest:
     build:
-      context: app
+      context: django-compose/app
       dockerfile: django-compose/app/Dockerfile
       target: builder
     ports: 
