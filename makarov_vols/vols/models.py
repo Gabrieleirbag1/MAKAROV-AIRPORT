@@ -18,6 +18,7 @@ from django.contrib.auth.models import User
 #         return self.nom
     
 class Vol(models.Model):
+    numvol = models.IntegerField()
     aeroport_depart_ref = models.IntegerField()
     aeroport_arrivee_ref = models.IntegerField()
     date_depart = models.DateField()

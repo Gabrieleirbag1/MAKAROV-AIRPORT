@@ -1,30 +1,35 @@
-from django.shortcuts import render
-
-# Create your views here.
 from .models import Vol
 from .serializer import InfoVolSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-import requests
+import requests, time
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from datetime import datetime
 
 # Create your views here.
-
 def index(request):
     return HttpResponseRedirect('infos/')
 
 class VolListApiView(APIView):
 
     def get(self, request):
-        infosvols= Vol.objects.all()
+        numvol = request.query_params.get('numvol')
+        if numvol is not None:
+            infosvols= Vol.objects.filter(numvol=numvol)
+        else:
+            infosvols= Vol.objects.all()
+
         serializer = InfoVolSerializer(infosvols, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request, *args, **kwargs):
-
+        now = datetime.now()
+        now_str = now.strftime("%M%S%f")
+        now_int = int(now_str)
         data = {
+            'numvol': now_int,
             'aeroport_depart_ref': request.data.get('aeroport_depart_ref'),
             'aeroport_arrivee_ref': request.data.get('aeroport_arrivee_ref'),
             'date_depart': request.data.get('date_depart'),
