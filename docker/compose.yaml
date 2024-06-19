@@ -1,17 +1,53 @@
 services:
 
-
-  web-rest:
+###### API REST ########
+  web-rest-1:
     build:
-      context: django-compose/app
+      context: django-compose-user/app
       target: builder
     ports: 
-      - '8000:8000'
-      - '80:80'
-      - '443:443'
+      - '8001:8000'
+      - '81:80'
+      - '444:443'
     networks:
       - bridge_network
 
+  web-rest-2:
+    build:
+      context: django-compose-vols/app
+      target: builder
+    ports:
+      - '8002:8000'
+      - '82:80'
+      - '445:443'
+    networks:
+      - bridge_network
+
+  web-rest-3:
+    build:
+      context: django-compose-reservations/app
+      target: builder
+    ports:
+      - '8003:8000'
+      - '83:80'
+      - '446:443'
+    networks:
+      - bridge_network
+
+  web-rest-4:
+    build:
+      context: django-compose-aeroports/app
+      target: builder
+    ports:
+      - '8004:8000'
+      - '84:80'
+      - '447:443'
+    networks:
+      - bridge_network
+############################
+
+
+##### DATABASE #####
   db:
     image: mariadb
     environment:
@@ -25,14 +61,21 @@ services:
       - "3306:3306"
     networks:
       - bridge_network
+####################
 
+
+
+##### NATS CLUSTER #####
   nats:
     image: nats
     ports:
       - "8222:8222"
     networks:
       - bridge_network
+########################
 
+
+##### PYTHON MICROSERVICES #####
   micro1:
     build:
       dockerfile: microservices-compose/Dockerfile
@@ -56,6 +99,7 @@ services:
     networks:
       - bridge_network
     command: python3 script3.py
+################################
 
 
 networks:
