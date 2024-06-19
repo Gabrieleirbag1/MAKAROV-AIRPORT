@@ -10,8 +10,8 @@ COPY . /var/www/html/django-app
 RUN cd /var/www/html/django-app
 RUN sudo python3 manage.py makemigrations
 RUN sudo python3 manage.py migrate
-RUN cd djangoapplicationplacholder
-RUN sudo python3 manage.py collectstatic
+#RUN cd djangoapplicationplacholder
+#RUN sudo python3 manage.py collectstatic
 
 RUN sudo chgrp -R www-data /var/www/html
 RUN sudo a2ensite django-app
