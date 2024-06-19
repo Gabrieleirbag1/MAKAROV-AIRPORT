@@ -1,8 +1,6 @@
 services:
 
 
-
-
   web-rest:
     build:
       context: django-compose/app
