@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 RUN apt upgrade
 RUN apt update
-RUN apt install apache2 apache2-utils python3 python3-pip libapache2-mod-wsgi-py3
+RUN apt install -y apache2 apache2-utils python3 python3-pip libapache2-mod-wsgi-py3
 
 COPY django-app.conf /etc/apache2/sites-available/
 COPY . /var/www/html/django-app
