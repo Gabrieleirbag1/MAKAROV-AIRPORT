@@ -10,6 +10,7 @@ COPY . /var/www/html/django-app
 RUN . /opt/venv/bin/activate && pip install -r requirements.txt
 ############
 
+
 RUN python3 /var/www/html/django-app/manage.py makemigrations
 RUN python3 /var/www/html/django-app/manage.py migrate
 #RUN cd djangoapplicationplacholder
