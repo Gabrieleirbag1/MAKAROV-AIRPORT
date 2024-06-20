@@ -6,11 +6,9 @@ RUN apt install -y apache2 apache2-utils python3 python3-pip libapache2-mod-wsgi
 COPY django-app.conf /etc/apache2/sites-available/
 COPY . /var/www/html/django-app
 
-#setup venv#
-RUN python3 -m venv djangovenv
-RUN source djangovenv/bin/activate && pip install -r /var/www/html/django-app/requirements.txt
-############
-
+# Set up virtual environment and install Python dependencies
+RUN python3 -m venv /var/www/html/django-app/djangovenv && \
+    /var/www/html/django-app/djangovenv/bin/pip install -r /var/www/html/django-app/requirements.txt
 
 RUN python3 /var/www/html/django-app/manage.py makemigrations
 RUN python3 /var/www/html/django-app/manage.py migrate
