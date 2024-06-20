@@ -36,7 +36,7 @@ services:
 
   web-rest-4:
     build:
-      context: django-compose-aeroports/app
+      context: django-compose-structure/app
       target: builder
     ports:
       - '8004:8000'
