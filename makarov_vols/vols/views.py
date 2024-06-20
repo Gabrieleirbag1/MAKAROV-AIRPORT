@@ -25,6 +25,7 @@ class VolListApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request, *args, **kwargs):
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         now = datetime.now()
         now_str = now.strftime("%M%S%f")
         now_int = int(now_str)

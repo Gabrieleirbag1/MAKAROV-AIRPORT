@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth import authenticate
 import requests, json, random
 from .nats_utils import PublishBank
 
@@ -22,7 +23,12 @@ def bool_convert(value):
 class UserListApiView(APIView):
 
     def get(self, request):
-        infosuser= UserProfile.objects.all()
+        username = request.query_params.get('username')
+        if username is not None:
+            infosuser= UserProfile.objects.filter(username=username)
+            print(infosuser)
+        else:
+            infosuser= UserProfile.objects.all()
         serializer = InfoUserSerializer(infosuser, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -100,15 +106,32 @@ class UserDetailApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+class LoginUserListApiView(APIView):
+
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        infos = requests.get(f"http://localhost:8000/users/infos/users/?username={username}")
+        infos = infos.json()
+        try:
+            if username == infos[0]['username'] and password == infos[0]['password']:
+                infosuser = UserProfile.objects.get(username=username)
+                serializer = InfoUserSerializer(infosuser)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
+        except IndexError:
+            return Response({"error": "Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
 #######################################################""
 
 class BanqueListApiView(APIView):
 
     def get(self, request):
-        rib = request.query_params.get('rib')
-        if rib is not None:
-            infosbanque= Banque.objects.filter(rib=rib)
+        username = request.query_params.get('username')
+        if username is not None:
+            infosbanque= Banque.objects.filter(username=username)
             print(infosbanque)
         else:
             infosbanque= Banque.objects.all()

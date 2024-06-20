@@ -57,7 +57,6 @@ class ReservationsDetailApiView(APIView):
 
         serializer = InfoReservationsSerializer(inforeservations)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
     def delete(self, request, id, *args, **kwargs):
         inforeservations= Reservations.objects.get(id=id)

@@ -39,8 +39,9 @@ class SubscriberAnnulation():
             url = f"http://localhost:8002/reservations/infos/{id}/"
             headers = {"Content-Type": "application/json"}
 
-            if self.type_ == "validation" and annulation == "False":
-                data = {"vol_ref": numvol, "demande": False}
+            if self.type_ == "annulation" and annulation == "False":
+                print(self.type_, annulation)
+                data = {"vol_ref": numvol, "demande": "False"}
                 response = requests.put(url, headers=headers, data=json.dumps(data))
 
             data = {"vol_ref": numvol, self.type_: annulation}
