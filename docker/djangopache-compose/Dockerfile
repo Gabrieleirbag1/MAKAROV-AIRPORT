@@ -1,13 +1,14 @@
 FROM ubuntu:latest
 RUN apt upgrade
 RUN apt update
-RUN apt install -y apache2 apache2-utils python3 python3-pip libapache2-mod-wsgi-py3
+RUN apt install -y apache2 apache2-utils python3 python3-pip libapache2-mod-wsgi-py3 python3-venv
 
 COPY django-app.conf /etc/apache2/sites-available/
 COPY . /var/www/html/django-app
 
 #setup venv#
-RUN . /opt/venv/bin/activate && pip install -r requirements.txt
+RUN python3 -m venv djangovenv
+RUN source djangovenv/bin/activate && pip install -r /var/www/html/django-app/requirements.txt
 ############
 
 
