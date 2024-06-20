@@ -15,8 +15,8 @@ RUN /var/www/html/django-app/djangovenv/bin/python /var/www/html/django-app/mana
 
 RUN /var/www/html/django-app/djangovenv/bin/python /var/www/html/django-app/manage.py collectstatic
 
-RUN sudo chgrp -R www-data /var/www/html
-RUN sudo a2ensite django-app
-RUN sudo /etc/init.d/apache2 restart
+RUN chgrp -R www-data /var/www/html
+RUN a2ensite django-app
+RUN /etc/init.d/apache2 restart
 
 
