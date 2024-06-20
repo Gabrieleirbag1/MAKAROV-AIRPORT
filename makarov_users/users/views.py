@@ -10,7 +10,8 @@ from .nats_utils import PublishBank
 
 # Create your views here.
 def index(request):
-    PublishBank()
+    response = PublishBank().setup()
+    print(response)
     return HttpResponseRedirect('infos/')
 
 def bool_convert(value):

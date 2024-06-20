@@ -5,21 +5,24 @@ import os
 import random
 
 class PublishBank():
-    def __init__(self, rib=41672307, num_vol=353629857) -> None:
+    def __init__(self, rib = 41672307, numvol = 353629857) -> None:
         self.rib = rib
-        self.num_vol = num_vol
-        asyncio.run(self.run_publisher())
+        self.numvol = numvol
+
+    def setup(self):
+        return asyncio.run(self.run_publisher())
 
     async def run_publisher(self):
         nc = await nats.connect("nats://127.0.0.1:4222")
-        data = json.dumps({"num_vol": self.num_vol, "rib": self.rib})
+
+        data = json.dumps({"numvol": self.numvol, "rib": self.rib})
         try:
             response = await nc.request("banque.*", data.encode())
-            print(response.data.decode())
         except KeyboardInterrupt:
             pass
         finally:
             await nc.close()
+            return response.data.decode()
 
 if __name__ == '__main__':
-    PublishBank()
+    print(PublishBank().setup())

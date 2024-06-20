@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Reservations(models.Model):
     vol_ref = models.IntegerField()
-    user_ref = models.IntegerField()
+    user_ref = models.CharField(unique=True, max_length=100)
     demande = models.BooleanField(default=False)
     annulation = models.BooleanField(default=False)
     

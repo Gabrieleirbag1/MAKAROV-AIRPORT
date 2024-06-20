@@ -13,8 +13,8 @@ async def message_handler(msg):
     await msg.respond(json.dumps(response_data).encode())
 
 async def banque(msg):
-    async def get_vol_info(num_vol):
-        vol_response = requests.get(f"http://localhost:8001/vols/infos/?numvol={num_vol}")
+    async def get_vol_info(numvol):
+        vol_response = requests.get(f"http://localhost:8001/vols/infos/?numvol={numvol}")
         vol_data = vol_response.json()
         prix = vol_data[0]['prix']
         print("prix", prix)
@@ -37,16 +37,16 @@ async def banque(msg):
             response = requests.put(f"http://localhost:8000/users/infos/banque/?rib={rib}/", 
                                     data=f'{{"argent": {argent}}}', 
                                     headers={'Content-Type': 'application/json'})
-            response_data = {"status": "ok"}
+            response_data = "True"
         else:
-            response_data = {"status": "not ok"}
+            response_data = "False"
         return response_data
 
     data = json.loads(msg.data.decode())
     rib = data['rib']
-    num_vol = data['num_vol']
+    numvol = data['numvol']
 
-    prix = await get_vol_info(num_vol)
+    prix = await get_vol_info(numvol)
     response_data = await get_banque_info(rib, prix)
     return response_data
 
