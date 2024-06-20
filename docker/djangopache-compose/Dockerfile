@@ -10,8 +10,8 @@ COPY . /var/www/html/django-app
 RUN python3 -m venv /var/www/html/django-app/djangovenv && \
     /var/www/html/django-app/djangovenv/bin/pip install -r /var/www/html/django-app/requirements.txt
 
-RUN python3 /var/www/html/django-app/manage.py makemigrations
-RUN python3 /var/www/html/django-app/manage.py migrate
+RUN /var/www/html/django-app/djangovenv/bin/python /var/www/html/django-app/manage.py makemigrations && \
+    /var/www/html/django-app/djangovenv/bin/python /var/www/html/django-app/manage.py migrate
 #RUN cd djangoapplicationplacholder
 #RUN python3 manage.py collectstatic
 
