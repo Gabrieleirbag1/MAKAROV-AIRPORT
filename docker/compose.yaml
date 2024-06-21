@@ -52,7 +52,7 @@ services:
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD:
-      MYSQL_DATABASE: marakov_airport
+      MYSQL_DATABASE: makarov_airport
       MYSQL_USER: gab
       MYSQL_PASSWORD: toto
     volumes:
