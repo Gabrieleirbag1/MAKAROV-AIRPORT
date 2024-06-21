@@ -16,7 +16,6 @@ class SubscriberAnnulation():
 
     async def message_handler(self, msg):
         if msg.subject == f"annulation.{self.subject}":
-            print("uxu")
             response_data = await self.annulation(msg)
         else:
             response_data = {"status": "ignore"}
@@ -56,8 +55,8 @@ class SubscriberAnnulation():
         id = await get_reservation(numvol, username)
         await put_annulation(numvol, annulation, id)
 
-        return f"Ajout {self.type_}"
-
+        return {"status":"True"}
+    
     async def run_subscriber(self):
         self.nc = await nats.connect("nats://192.168.1.101:4222")
 
