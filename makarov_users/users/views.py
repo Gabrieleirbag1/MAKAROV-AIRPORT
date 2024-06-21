@@ -53,7 +53,7 @@ class UserListApiView(APIView):
     def post_bank_info(self, username):
         argent = random.randint(800, 3000)
         rib = random.randint(00000000, 99999999)
-        url = 'http://localhost:8000/users/infos/banque/'
+        url = 'http://192.168.1.101:8000/users/infos/banque/'
         data = {
             'username': username,
             'argent': argent,
@@ -62,8 +62,8 @@ class UserListApiView(APIView):
         headers = {'Content-Type': 'application/json'}
 
         response = requests.post(url, data=json.dumps(data), headers=headers)
-
-        if response.status_rib == 201:
+        
+        if response.status_code == 201:
             print('Information de la banque créée avec succès.')
         else:
             print(f'Erreur lors de la création de l\'information de la banque: {response.content}')
@@ -88,19 +88,22 @@ class UserDetailApiView(APIView):
         return Response({"response": f"UserProfile with id #{id} deleted successfully"}, status=status.HTTP_200_OK)
     
     def put(self, request, id, *args, **kwargs):
-        users= UserProfile.objects.get(id=id)
-        if not users:
+        try:
+            user = UserProfile.objects.get(id=id)
+        except UserProfile.DoesNotExist:
             return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
 
         data = {
-            'username': request.data.get('username'),
-            'first_name': request.data.get('first_name'),
-            'last_name': request.data.get('last_name'),
-            'email': request.data.get('email'),
-            'password': request.data.get('password'),
+            'username': request.data.get('username', user.username),
+            'first_name': request.data.get('first_name', user.first_name),
+            'last_name': request.data.get('last_name', user.last_name),
+            'email': request.data.get('email', user.email),
+            'password': request.data.get('password', user.password),
         }
-        
-        serializer = InfoUserSerializer(instance=UserProfile, data=data, partial=True)
+
+        # response = requests.put(f"http://192.168.100.1:8000")
+        serializer = InfoUserSerializer(instance=user, data=data, partial=True)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -113,7 +116,7 @@ class LoginUserListApiView(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
 
-        infos = requests.get(f"http://localhost:8000/users/infos/users/?username={username}")
+        infos = requests.get(f"http://192.168.1.101:8000/users/infos/users/?username={username}")
         infos = infos.json()
         try:
             if username == infos[0]['username'] and password == infos[0]['password']:

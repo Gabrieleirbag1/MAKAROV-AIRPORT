@@ -5,11 +5,14 @@ from .models import Vol
 class InfoVolSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vol
-        fields = ["numvol",
+        fields = ["id",
+                  "numvol",
                   "aeroport_depart_ref", 
                   "aeroport_arrivee_ref", 
                   "date_depart", 
                   "date_arrivee", 
                   "heure_depart", 
                   "heure_arrivee", 
-                  "prix"]
+                  "prix",
+                  "type",
+                  "avion_ref"]

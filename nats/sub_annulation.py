@@ -16,6 +16,7 @@ class SubscriberAnnulation():
 
     async def message_handler(self, msg):
         if msg.subject == f"annulation.{self.subject}":
+            print("uxu")
             response_data = await self.annulation(msg)
         else:
             response_data = {"status": "ignore"}
@@ -24,7 +25,7 @@ class SubscriberAnnulation():
 
     async def annulation(self, msg):
         async def get_reservation(numvol, username):
-            url = "http://localhost:8002/reservations/infos/"
+            url = "http://192.168.1.101:8002/reservations/infos/"
             headers = {"Content-Type": "application/json"}
 
             response = requests.get(url, headers=headers)
@@ -36,7 +37,7 @@ class SubscriberAnnulation():
             return None
 
         async def put_annulation(numvol, annulation, id):
-            url = f"http://localhost:8002/reservations/infos/{id}/"
+            url = f"http://192.168.1.101:8002/reservations/infos/{id}/"
             headers = {"Content-Type": "application/json"}
 
             if self.type_ == "annulation" and annulation == "False":
@@ -58,7 +59,7 @@ class SubscriberAnnulation():
         return f"Ajout {self.type_}"
 
     async def run_subscriber(self):
-        self.nc = await nats.connect("nats://127.0.0.1:4222")
+        self.nc = await nats.connect("nats://192.168.1.101:4222")
 
         await self.nc.subscribe(f"annulation.{self.subject}", cb=self.message_handler)
 

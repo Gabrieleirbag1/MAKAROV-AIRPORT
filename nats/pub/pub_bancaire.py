@@ -3,6 +3,7 @@ import nats
 import json
 import os
 import random
+from pub_dispo import PublishDispo
 
 class PublishBank():
     """Classe pour publier des informations bancaires.
@@ -40,8 +41,15 @@ class PublishBank():
         finally:
             await nc.close()
             return response.data.decode()
+        
+def publish_reservation(numvol = 1515199652, username = "owen"):
+    data = PublishBank(username, numvol).setup()
+    data = json.loads(data)
+    if data["status"] == "True":
+        rep = PublishDispo(numvol = numvol, username=data["username"], argent=data["argent"]).setup()
+        print(rep)
 
 if __name__ == '__main__':
-    print(PublishBank().setup())
+    publish_reservation()
 
 # -> return {"status": "True", "id": 7, "vol_ref": 353629857, "user_ref": "aedsdkhmvl", "demande": false, "annulation": false}

@@ -6,4 +6,6 @@ urlpatterns = [
     
     path('infos/', views.ReservationsListApiView.as_view()),
     path('infos/<int:id>/', views.ReservationsDetailApiView.as_view()),
+    
+    path('infos/user_vols/', views.UserVolsListApiView.as_view()),
 ]

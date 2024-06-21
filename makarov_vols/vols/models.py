@@ -27,6 +27,7 @@ class Vol(models.Model):
     heure_arrivee = models.TimeField()
     prix = models.IntegerField()
     type = models.CharField(max_length=100)
+    avion_ref = models.CharField(max_length=100)
 
     def __str__(self):
         return f'{self.aeroport_depart_ref} -> {self.aeroport_arrivee_ref}'

@@ -26,7 +26,7 @@ async def banque(msg):
         
         Args:
             username (str): Le nom d'utilisateur associé à la réponse."""
-        user_response = requests.get(f"http://localhost:8000/users/infos/banque/?username={username}")
+        user_response = requests.get(f"http://192.168.1.101:8000/users/infos/banque/?username={username}")
         user_data = user_response.json()
         rib = user_data[0]['rib']
         return rib
@@ -36,7 +36,7 @@ async def banque(msg):
         
         Args:
             numvol (int): Le numéro de vol associé à la réponse."""
-        vol_response = requests.get(f"http://localhost:8001/vols/infos/?numvol={numvol}")
+        vol_response = requests.get(f"http://192.168.1.101:8001/vols/infos/?numvol={numvol}")
         vol_data = vol_response.json()
         prix = vol_data[0]['prix']
         return prix
@@ -49,7 +49,7 @@ async def banque(msg):
             numvol (int): Le numéro de vol associé à la réponse.
             rib (int): Le RIB associé à la réponse.
             prix (int): Le prix associé à la réponse."""
-        banque_response = requests.get(f"http://localhost:8000/users/infos/banque/?rib={rib}")
+        banque_response = requests.get(f"http://192.168.1.101:8000/users/infos/banque/?rib={rib}")
         banque_data = banque_response.json()
         argent = banque_data[0]['argent']
         
@@ -68,20 +68,10 @@ async def banque(msg):
         if argent > prix:
             print(argent, prix)
             argent-= prix
-            response = requests.put(f"http://localhost:8000/users/infos/banque/?rib={rib}/", 
+            response = requests.put(f"http://192.168.1.101:8000/users/infos/banque/?rib={rib}/", 
                                     data=f'{{"argent": {argent}}}', 
                                     headers={'Content-Type': 'application/json'})
-
-            data = {
-                'vol_ref': f"{numvol}",
-                'user_ref': username,
-                'demande': 'False',
-                'annulation': 'False'
-            }
-            response = requests.post(f"http://localhost:8002/reservations/infos/",
-                                    data=json.dumps(data),
-                                    headers={'Content-Type': 'application/json'})
-            response_data = {"status": "True"} | response.json()
+            response_data = {"status": "True", "argent": argent, "username": username}
         else:
             response_data = {"status": "False"}
         return response_data
@@ -97,7 +87,7 @@ async def banque(msg):
 
 async def run_subscriber():
     """Exécute le serveur NATS."""
-    nc = await nats.connect("nats://127.0.0.1:4222")
+    nc = await nats.connect("nats://192.168.1.101:4222")
 
     await nc.subscribe("banque.*", cb=message_handler)
 

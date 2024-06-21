@@ -45,7 +45,6 @@ class ReservationsListApiView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class ReservationsDetailApiView(APIView):
@@ -85,3 +84,15 @@ class ReservationsDetailApiView(APIView):
         
         print(data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class UserVolsListApiView(APIView):
+
+    def get(self, request):
+        user_ref = request.query_params.get('user_ref')
+        if user_ref is not None:
+            infosvols= Reservations.objects.filter(user_ref=user_ref)
+        else:
+            infosvols= Reservations.objects.all()
+
+        serializer = InfoReservationsSerializer(infosvols, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

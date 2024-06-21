@@ -39,6 +39,7 @@ class VolListApiView(APIView):
             'heure_arrivee': request.data.get('heure_arrivee'),
             'prix': request.data.get('prix'),
             'type': request.data.get('type'),
+            'avion_ref': request.data.get('avion_ref'),
         }
 
         serializer = InfoVolSerializer(data=data)
@@ -58,7 +59,6 @@ class VolDetailApiView(APIView):
         serializer = InfoVolSerializer(vols)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-
     def delete(self, request, id, *args, **kwargs):
         vols= Vol.objects.get(id=id)
         if not vols:
@@ -73,16 +73,17 @@ class VolDetailApiView(APIView):
             return Response({"response": f"Vol with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
 
         data = {
-            'aeroport_depart_ref': request.data.get('aeroport_depart_ref'),
-            'aeroport_arrivee_ref': request.data.get('aeroport_arrivee_ref'),
-            'date_depart': request.data.get('date_depart'),
-            'date_arrivee': request.data.get('date_arrivee'),
-            'heure_depart': request.data.get('heure_depart'),
-            'heure_arrivee': request.data.get('heure_arrivee'),
-            'prix': request.data.get('prix'),
-            'type': request.data.get('type'),
+            'aeroport_depart_ref': request.data.get('aeroport_depart_ref') or vols.aeroport_depart_ref,
+            'aeroport_arrivee_ref': request.data.get('aeroport_arrivee_ref') or vols.aeroport_arrivee_ref,
+            'date_depart': request.data.get('date_depart') or vols.date_depart,
+            'date_arrivee': request.data.get('date_arrivee') or vols.date_arrivee,
+            'heure_depart': request.data.get('heure_depart') or vols.heure_depart,
+            'heure_arrivee': request.data.get('heure_arrivee') or vols.heure_arrivee,
+            'prix': request.data.get('prix') or vols.prix,
+            'type': request.data.get('type') or vols.type,
+            'avion_ref': request.data.get('avion_ref') or vols.avion_ref,
         }
-        serializer = InfoVolSerializer(instance=Vol, data=data, partial=True)
+        serializer = InfoVolSerializer(instance=vols, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

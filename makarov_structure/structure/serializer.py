@@ -4,7 +4,7 @@ from .models import Aeroports, Staff, Avions
 class InfoAeroportsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Aeroports
-        fields = ["nom", "code_pays", "fuseau"]
+        fields = ["id", "nom", "code_pays", "fuseau"]
 
 class InfoStaffSerializer(serializers.ModelSerializer):
     class Meta:

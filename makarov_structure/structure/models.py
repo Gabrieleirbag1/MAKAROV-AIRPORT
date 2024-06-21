@@ -21,7 +21,7 @@ class Avions(models.Model):
     marque = models.CharField(max_length=100)
     modele = models.CharField(max_length=100)
     places = models.IntegerField()
-    image = models.CharField(max_length=100)
+    image = models.CharField(max_length=100, blank=True, null=True)
     
     def __str__(self):
         return f'{self.marque} {self.modele}'

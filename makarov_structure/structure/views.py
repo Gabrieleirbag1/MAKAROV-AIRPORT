@@ -14,7 +14,12 @@ def index(request):
 class AvionsListApiView(APIView):
 
     def get(self, request):
-        infosavions= Avions.objects.all()
+        modele = request.query_params.get('modele')
+        if modele is not None:
+            infosavions= Avions.objects.filter(modele=modele)
+            print(infosavions)
+        else:
+            infosavions= Avions.objects.all()
         serializer = InfoAvionsSerializer(infosavions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
         
