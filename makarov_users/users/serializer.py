@@ -10,4 +10,4 @@ class InfoUserSerializer(serializers.ModelSerializer):
 class InfoBanqueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Banque
-        fields = ["username", "argent", "rib"]
+        fields = ["id", "username", "argent", "rib"]

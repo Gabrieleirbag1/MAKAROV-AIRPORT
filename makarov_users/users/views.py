@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate
 import requests, json, random
 from .nats_utils import PublishBank
+from copy import deepcopy
 
 # Create your views here.
 def index(request):
@@ -93,6 +94,7 @@ class UserDetailApiView(APIView):
         except UserProfile.DoesNotExist:
             return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
 
+        old_username = deepcopy(user.username)
         data = {
             'username': request.data.get('username', user.username),
             'first_name': request.data.get('first_name', user.first_name),
@@ -101,11 +103,19 @@ class UserDetailApiView(APIView):
             'password': request.data.get('password', user.password),
         }
 
-        # response = requests.put(f"http://192.168.100.1:8000")
         serializer = InfoUserSerializer(instance=user, data=data, partial=True)
 
         if serializer.is_valid():
+            response = requests.get(f"http://192.168.1.101:8000/users/infos/banque/?username={old_username}")
+            print(response.json())
+            id = response.json()[0]['id']
+            headers = {'Content-Type': 'application/json'}
+            data = {
+                'username': request.data.get('username', user.username),
+            }
+            response = requests.put(f"http://192.168.1.101:8000/users/infos/banque/{id}/", data=json.dumps(data), headers=headers)
             serializer.save()
+
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -182,9 +192,9 @@ class BanqueDetailApiView(APIView):
             return Response({"response": f"Banque with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
 
         data = {
-            'username': request.data.get('username'),
-            'argent': request.data.get('argent'),
-            'rib': request.data.get('rib'),
+            'username': request.data.get('username') or banques.username,
+            'argent': request.data.get('argent') or banques.argent,
+            'rib': request.data.get('rib') or banques.rib,
         }
         
         serializer = InfoBanqueSerializer(instance=banques, data=data, partial=True)
