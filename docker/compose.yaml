@@ -51,10 +51,10 @@ services:
   db:
     image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: marakov_airport
+      MYSQL_USER: gab
+      MYSQL_PASSWORD: toto
     volumes:
       - db-data:/var/lib/mysql
     ports:
