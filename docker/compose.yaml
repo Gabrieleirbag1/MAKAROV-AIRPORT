@@ -1,5 +1,22 @@
 services:
 
+
+##### DATABASE #####
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: makarov_airport
+      MYSQL_USER: gab
+      MYSQL_PASSWORD: toto
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - bridge_network
+####################
+
 ###### API REST ########
   web-rest-1:
     build:
@@ -45,24 +62,6 @@ services:
     networks:
       - bridge_network
 ############################
-
-
-##### DATABASE #####
-  db:
-    image: mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD:
-      MYSQL_DATABASE: makarov_airport
-      MYSQL_USER: gab
-      MYSQL_PASSWORD: toto
-    volumes:
-      - db-data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    networks:
-      - bridge_network
-####################
-
 
 
 ##### NATS CLUSTER #####
