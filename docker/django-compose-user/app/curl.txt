@@ -1,0 +1,8 @@
+curl -X POST -H "Content-Type: application/json" -d '{"username": "johndoe", "first_name": "john", "last_name": "doe", "password": "mypassword", "email": "johndoe@example.com"}' http://localhost:8000/users/infos/users/
+
+curl -X POST -H "Content-Type: application/json" -d '{"username": "jane", "first_name": "john", "last_name": "doe", "password": "mypassword", "email": "johndoe@example.com"}' http://localhost:8000/users/infos/users/
+
+curl -X PUT -H "Content-Type: application/json" -d '{"username": "janedoe", "first_name": "john", "last_name": "doe", "password": "mypassword", "email": "johndoe@example.com"}' http://localhost:8000/users/infos/users/2/
+
+#Login
+curl -X POST -H "Content-Type: application/json" -d '{"username": "johndoe", "password": "mypassword"}' http://localhost:8000/users/login/users/
