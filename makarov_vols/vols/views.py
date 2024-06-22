@@ -3,7 +3,7 @@ from .serializer import InfoVolSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-import requests, time
+import requests, time, random
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from datetime import datetime
@@ -26,9 +26,7 @@ class VolListApiView(APIView):
     
     def post(self, request, *args, **kwargs):
         print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-        now = datetime.now()
-        now_str = now.strftime("%M%S%f")
-        now_int = int(now_str)
+        now_int = random.randint(0, 9999999)
         data = {
             'numvol': now_int,
             'aeroport_depart_ref': request.data.get('aeroport_depart_ref'),

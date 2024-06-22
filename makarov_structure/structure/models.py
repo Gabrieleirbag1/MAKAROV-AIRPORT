@@ -10,9 +10,9 @@ class Aeroports(models.Model):
         return self.nom
     
 class Staff(models.Model):
-    user_ref = models.IntegerField()
+    user_ref = models.CharField(unique=True, max_length=100)
     aeroport_ref = models.ForeignKey(Aeroports, on_delete=models.CASCADE, related_name='nom_aeroport')
-    level = models.CharField(max_length=2)
+    level = models.IntegerField()
 
     def __str__(self):
         return f'{self.user_ref} -> {self.aeroport_ref}'

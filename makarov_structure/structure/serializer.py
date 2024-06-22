@@ -9,9 +9,9 @@ class InfoAeroportsSerializer(serializers.ModelSerializer):
 class InfoStaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
-        fields = ["user_ref", "aeroport_ref", "level"]
+        fields = ["id", "user_ref", "aeroport_ref", "level"]
 
 class InfoAvionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Avions
-        fields = ["marque", "modele", "places", "image"]
+        fields = ["id", "marque", "modele", "places", "image"]

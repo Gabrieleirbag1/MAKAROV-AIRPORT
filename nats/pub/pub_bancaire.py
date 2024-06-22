@@ -16,7 +16,7 @@ class PublishBank():
         numvol (int): Le numéro de vol associé aux informations bancaires.
     """
 
-    def __init__(self, username="aedsdkhmvl", numvol=353629857) -> None:
+    def __init__(self, username="owen", numvol=518343366) -> None:
         """Initialise une instance de PublishBank.
         
         Args:
@@ -31,7 +31,7 @@ class PublishBank():
 
     async def run_publisher(self):
         """Exécute la publication des informations bancaires."""
-        nc = await nats.connect("nats://127.0.0.1:4222")
+        nc = await nats.connect("nats://192.168.1.101:4222")
 
         data = json.dumps({"numvol": self.numvol, "username": self.username})
         try:
@@ -42,7 +42,7 @@ class PublishBank():
             await nc.close()
             return response.data.decode()
         
-def publish_reservation(numvol = 1515199652, username = "owen"):
+def publish_reservation(numvol = 518343366, username = "owen"):
     data = PublishBank(username, numvol).setup()
     data = json.loads(data)
     if data["status"] == "True":

@@ -29,6 +29,7 @@ async def banque(msg):
         user_response = requests.get(f"http://192.168.1.101:8000/users/infos/banque/?username={username}")
         user_data = user_response.json()
         rib = user_data[0]['rib']
+        print(rib)
         return rib
     
     async def get_vol_info(numvol):
@@ -49,14 +50,15 @@ async def banque(msg):
             numvol (int): Le numéro de vol associé à la réponse.
             rib (int): Le RIB associé à la réponse.
             prix (int): Le prix associé à la réponse."""
-        banque_response = requests.get(f"http://192.168.1.101:8000/users/infos/banque/?rib={rib}")
+        banque_response = requests.get(f"http://192.168.1.101:8000/users/rib/banque/?rib={rib}")
         banque_data = banque_response.json()
+        id_rib = banque_data[0]['id']
         argent = banque_data[0]['argent']
         
-        response_data = await manage_response(username, numvol, rib, argent, prix)
+        response_data = await manage_response(username, numvol, rib, argent, prix, id_rib)
         return response_data
 
-    async def manage_response(username, numvol, rib, argent, prix):
+    async def manage_response(username, numvol, rib, argent, prix, id_rib):
         """Gère la réponse de la banque.
         
         Args:
@@ -68,7 +70,7 @@ async def banque(msg):
         if argent > prix:
             print(argent, prix)
             argent-= prix
-            response = requests.put(f"http://192.168.1.101:8000/users/infos/banque/?rib={rib}/", 
+            response = requests.put(f"http://192.168.1.101:8000/users/infos/banque/{id_rib}/", 
                                     data=f'{{"argent": {argent}}}', 
                                     headers={'Content-Type': 'application/json'})
             response_data = {"status": "True", "argent": argent, "username": username}

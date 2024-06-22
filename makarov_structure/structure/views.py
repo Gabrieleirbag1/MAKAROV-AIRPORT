@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+import requests, json
 
 # Create your views here.
 def index(request):
@@ -94,6 +95,13 @@ class StaffListApiView(APIView):
         serializer = InfoStaffSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
+            response = requests.get(f"http://192.168.1.101:8000/users/infos/users/?username={request.data.get('user_ref')}")
+            id = response.json()[0]['id']
+            headers = {'Content-Type': 'application/json'}
+            data = {
+            'is_superuser': True
+            }
+            response = requests.put(f"http://192.168.1.101:8000/users/staff/users/{id}/", data=json.dumps(data), headers=headers)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -108,13 +116,19 @@ class StaffDetailApiView(APIView):
 
         serializer = InfoStaffSerializer(infosstaff)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
     def delete(self, request, id, *args, **kwargs):
         infosstaff= Staff.objects.get(id=id)
         if not infosstaff:
             return Response({"response": f"InfosStaff with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
 
+        response = requests.get(f"http://192.168.1.101:8000/users/infos/users/?username={infosstaff.user_ref}")
+        id = response.json()[0]['id']
+        headers = {'Content-Type': 'application/json'}
+        data = {
+        'is_superuser': False
+        }
+        response = requests.put(f"http://192.168.1.101:8000/users/staff/users/{id}/", data=json.dumps(data), headers=headers)
         infosstaff.delete()
         return Response({"response": f"InfosStaff with id #{id} deleted successfully"}, status=status.HTTP_200_OK)
     

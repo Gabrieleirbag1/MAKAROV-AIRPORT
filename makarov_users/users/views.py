@@ -119,6 +119,50 @@ class UserDetailApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+#############################################################""
+class SuperUserApiView(APIView):
+
+    def get(self, request):
+        username = request.query_params.get('username')
+        if username is not None:
+            infosuser= UserProfile.objects.filter(username=username)
+            print(infosuser)
+        else:
+            infosuser= UserProfile.objects.all()
+        serializer = InfoUserSerializer(infosuser, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        return
+
+class SuperUserDetailApiView(APIView):
+
+    def get(self, request, id, *args, **kwargs):
+        users= UserProfile.objects.get(id=id)
+        if not users:
+            return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = InfoUserSerializer(users)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, id, *args, **kwargs):
+        try:
+            user = UserProfile.objects.get(id=id)
+        except UserProfile.DoesNotExist:
+            return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = {
+            'is_superuser': request.data.get('is_superuser', user.is_superuser)
+        }
+
+        serializer = InfoUserSerializer(instance=user, data=data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginUserListApiView(APIView):
 
@@ -203,3 +247,15 @@ class BanqueDetailApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class RibBanqueListApiView(APIView):
+
+    def get(self, request):
+        rib = request.query_params.get('rib')
+        if rib is not None:
+            infosbanque= Banque.objects.filter(rib=rib)
+            print(infosbanque)
+        else:
+            infosbanque= Banque.objects.all()
+        serializer = InfoBanqueSerializer(infosbanque, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
