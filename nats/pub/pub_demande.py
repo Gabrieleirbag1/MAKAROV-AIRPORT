@@ -11,7 +11,7 @@ class PublishAnnulationDemande():
         numvol (int): Le numéro de vol associé aux informations de demande d'annulation.
         demande (str): La demande associée aux informations de demande d'annulation.
         username (str): Le nom d'utilisateur associé aux informations de demande d'annulation."""
-    def __init__(self, numvol = 353629857, demande = "True", username = "janedoe") -> None:
+    def __init__(self, numvol = 1515199652, demande = "True", username = "janedoe") -> None:
         """Initialise une instance de PublishAnnulationDemande.
         
         Args:
@@ -28,7 +28,7 @@ class PublishAnnulationDemande():
 
     async def run_publisher(self):
         """Exécute la publication des informations de demande d'annulation."""
-        nc = await nats.connect("nats://192.168.1.101:4222")
+        nc = await nats.connect("nats://192.168.1.57:4222")
 
         data = json.dumps({"numvol": self.numvol, "demande": self.demande, "username": self.username})
         try:

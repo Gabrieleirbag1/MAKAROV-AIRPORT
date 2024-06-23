@@ -62,6 +62,12 @@ class VolDetailApiView(APIView):
         if not vols:
             return Response({"response": f"Vol with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
 
+        response = requests.get(f"http://192.168.1.57:8002/reservations/infos/")
+        response_data = response.json()
+        for reservation in response_data:
+            if reservation['vol_ref'] == vols.numvol:
+                requests.delete(f"http://192.168.1.57:8002/reservations/infos/{reservation['id']}/")
+
         vols.delete()
         return Response({"response": f"Vol with id #{id} deleted successfully"}, status=status.HTTP_200_OK)
     

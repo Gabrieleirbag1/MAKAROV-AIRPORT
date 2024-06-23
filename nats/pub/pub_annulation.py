@@ -13,7 +13,7 @@ class PublishAnnulationValidation():
         numvol (int): Le numéro de vol associé aux informations de validation d'annulation.
         annulation (str): L'annulation associée aux informations de validation d'annulation.
         username (str): Le nom d'utilisateur associé aux informations de validation d'annulation."""
-    def __init__(self, numvol = 353629857, annulation = "True", username = "janedoe") -> None:
+    def __init__(self, numvol = 1515199652, annulation = "True", username = "janedoe") -> None:
         """Initialise une instance de PublishAnnulationValidation.
         
         Args:
@@ -30,7 +30,7 @@ class PublishAnnulationValidation():
 
     async def run_publisher(self):
         """Exécute la publication des informations de validation d'annulation."""
-        nc = await nats.connect("nats://127.0.0.1:4222")
+        nc = await nats.connect("nats://192.168.1.57:4222")
 
         data = json.dumps({"numvol": self.numvol, "annulation": self.annulation, "username": self.username})
         try:

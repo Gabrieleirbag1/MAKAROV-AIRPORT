@@ -31,7 +31,7 @@ class PublishBank():
 
     async def run_publisher(self):
         """Exécute la publication des informations bancaires."""
-        nc = await nats.connect("nats://192.168.1.101:4222")
+        nc = await nats.connect("nats://192.168.1.57:4222")
 
         data = json.dumps({"numvol": self.numvol, "username": self.username})
         try:
@@ -48,6 +48,9 @@ def publish_reservation(numvol = 518343366, username = "owen"):
     if data["status"] == "True":
         rep = PublishDispo(numvol = numvol, username=data["username"], argent=data["argent"]).setup()
         print(rep)
+        return data
+    else:
+        return data
 
 if __name__ == '__main__':
     publish_reservation()
