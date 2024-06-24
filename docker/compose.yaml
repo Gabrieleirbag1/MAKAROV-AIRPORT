@@ -121,7 +121,6 @@ services:
 
 networks:
   bridge_network:
-    driver: bridge
 volumes:
   db-data:
     name: "maria-data"
