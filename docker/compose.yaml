@@ -29,9 +29,92 @@ services:
       - '444:443'
     networks:
       my_network:
+        ipv4_address: 172.21.0.1
+    depends_on:
+      - db
+
+  web-rest-2:
+    build:
+      context: django-compose-vols/app
+      target: builder
+    ports:
+      - '8001:8000'
+      - '82:80'
+      - '445:443'
+    networks:
+      my_network:
+        ipv4_address: 172.21.0.2
+    depends_on:
+      - db
+
+  web-rest-3:
+    build:
+      context: django-compose-reservations/app
+      target: builder
+    ports:
+      - '8001:8000'
+      - '82:80'
+      - '445:443'
+    networks:
+      my_network:
+        ipv4_address: 172.21.0.3
+    depends_on:
+      - db
+
+  web-rest-4:
+    build:
+      context: django-compose-structure/app
+      target: builder
+    ports:
+      - '8001:8000'
+      - '82:80'
+      - '445:443'
+    networks:
+      my_network:
         ipv4_address: 172.21.0.4
     depends_on:
       - db
+####################################
+
+##### NATS CLUSTER #####
+  nats:
+    image: nats
+    ports:
+      - "8222:8222"
+    networks:
+      my_network:
+        ipv4_address: 172.21.0.10
+########################
+
+
+##### PYTHON MICROSERVICES #####
+  micro1:
+    build:
+      dockerfile: microservices-compose/Dockerfile
+      target: micropy
+    networks:
+      my_network:
+        ipv4_address: 172.21.0.20
+    command: python3 script1.py
+
+  micro2:
+    build:
+      dockerfile: microservices-compose/Dockerfile
+      target: micropy
+    networks:
+      my_network:
+        ipv4_address: 172.21.0.21
+    command: python3 script2.py
+
+  micro3:
+    build:
+      dockerfile: microservices-compose/Dockerfile
+      target: micropy
+    networks:
+      my_network:
+        ipv4_address: 172.21.0.22
+    command: python3 script3.py
+################################
 
 networks:
   my_network:
