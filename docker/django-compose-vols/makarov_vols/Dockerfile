@@ -2,10 +2,10 @@
 
 FROM --platform=$BUILDPLATFORM python:3.10-alpine AS builder
 WORKDIR /app 
-COPY django-compose-user/requirements.txt /app
+COPY django-compose-vols/requirements.txt /app
 RUN pip3 install -r requirements.txt --no-cache-dir
-COPY django-compose-user/ /app
-COPY django-compose-user/wait-for-it.sh /wait-for-it.sh
+COPY django-compose-vols/ /app
+COPY django-compose-vols/wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 RUN python3 manage.py makemigrations
 ENTRYPOINT ["sh", "-c"]
