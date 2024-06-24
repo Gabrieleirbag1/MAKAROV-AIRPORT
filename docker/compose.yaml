@@ -3,6 +3,8 @@ services:
 
 ##### DATABASE #####
   db:
+    container_name: db
+    hostname: db
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD:
@@ -19,6 +21,8 @@ services:
 
 ###### API REST ########
   web-rest-1:
+    container_name: web-rest-1
+    hostname: web-rest-1
     build:
       context: django-compose-user/app
       target: builder
@@ -30,6 +34,8 @@ services:
       - bridge_network
 
   web-rest-2:
+    container_name: web-rest-2
+    hostname: web-rest-2
     build:
       context: django-compose-vols/app
       target: builder
@@ -41,6 +47,8 @@ services:
       - bridge_network
 
   web-rest-3:
+    container_name: web-rest-3
+    hostname: web-rest-3
     build:
       context: django-compose-reservations/app
       target: builder
@@ -52,6 +60,8 @@ services:
       - bridge_network
 
   web-rest-4:
+    container_name: web-rest-4
+    hostname: web-rest-4
     build:
       context: django-compose-structure/app
       target: builder
@@ -66,6 +76,8 @@ services:
 
 ##### NATS CLUSTER #####
   nats:
+    container_name: nats
+    hostname: nats
     image: nats
     ports:
       - "8222:8222"
@@ -76,6 +88,8 @@ services:
 
 ##### PYTHON MICROSERVICES #####
   micro1:
+    container_name: micro1
+    hostname: micro1
     build:
       dockerfile: microservices-compose/Dockerfile
       target: micropy
@@ -84,6 +98,8 @@ services:
     command: python3 script1.py
 
   micro2:
+    container_name: micro2
+    hostname: micro2
     build:
       dockerfile: microservices-compose/Dockerfile
       target: micropy
@@ -92,6 +108,8 @@ services:
     command: python3 script2.py
 
   micro3:
+    container_name: micro3
+    hostname: micro3
     build:
       dockerfile: microservices-compose/Dockerfile
       target: micropy
