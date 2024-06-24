@@ -17,11 +17,11 @@ class HOME(TemplateView):
         
         if request.method == "POST":
             print("POSTING THE FILTER FORM")
-            airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+            airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
             airports = airports.json()
             #print(f"Airports : {airports}")
 
-            flights = requests.get('http://172.21.0.2:8000/vols/infos/')
+            flights = requests.get('http://172.21.0.2:8002/vols/infos/')
             flights = flights.json()
             #print(f"Flights : {flights}")
 
@@ -61,7 +61,7 @@ class HOME(TemplateView):
 
             return render(request, 'flights/flight_list.html', {'flights': flights, 'airports': airports})
 
-        airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+        airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
         airports = airports.json()
 
         return render(request, 'general/index.html', {'airports': airports})
@@ -81,11 +81,11 @@ class HOME(TemplateView):
 class FLIGHTS(TemplateView):
     def flightsPage(request, *args, **kwargs):
 
-        airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+        airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
         airports = airports.json()
         #print(f"Airports : {airports}")
 
-        flights = requests.get('http://172.21.0.2:8000/vols/infos/')
+        flights = requests.get('http://172.21.0.2:8002/vols/infos/')
         flights = flights.json()
         #print(f"Flights : {flights}")
 
@@ -145,14 +145,14 @@ class FLIGHTS(TemplateView):
             print(f"User ID : {userName}")
 
             #Make the api call to get all of the user's reservations.
-            reservations = requests.get(f'http://172.21.0.3:8000/reservations/infos/user_vols/?user_ref={userName}')
+            reservations = requests.get(f'http://172.21.0.3:8003/reservations/infos/user_vols/?user_ref={userName}')
             reservations = reservations.json()
 
             combined_reservations = []#Holds each pair reservation/vol
 
             #Now we concatenate the reservation and the flight details
             for reservation in reservations:
-                vol_associe = requests.get(f'http://172.21.0.2:8000/vols/infos/?numvol={reservation["vol_ref"]}')
+                vol_associe = requests.get(f'http://172.21.0.2:8002/vols/infos/?numvol={reservation["vol_ref"]}')
                 vol_associe = vol_associe.json()
 
                 # print(f"vol associe : {vol_associe}")
@@ -160,9 +160,9 @@ class FLIGHTS(TemplateView):
                 # print(f"Aeroport arrivee : {vol_associe[0]['aeroport_arrivee_ref']}")
 
                 #This part below is just here to retrieve each airport's name
-                departure_airport = requests.get(f'http://172.21.0.4:8000/structure/infos/aeroports/{vol_associe[0]["aeroport_depart_ref"]}/')
+                departure_airport = requests.get(f'http://172.21.0.4:8004/structure/infos/aeroports/{vol_associe[0]["aeroport_depart_ref"]}/')
                 departure_airport_data = departure_airport.json()
-                arrival_airport = requests.get(f'http://172.21.0.4:8000/structure/infos/aeroports/{vol_associe[0]["aeroport_arrivee_ref"]}/')
+                arrival_airport = requests.get(f'http://172.21.0.4:8004/structure/infos/aeroports/{vol_associe[0]["aeroport_arrivee_ref"]}/')
                 arrival_airport_data = arrival_airport.json()
 
                 vol_associe[0]['aeroport_depart_nom'] = departure_airport_data['nom']
@@ -186,17 +186,17 @@ class FLIGHTS(TemplateView):
             alert = "alert alert-warning"
             return render(request, "flights/message_confirmation.html", {'message': message, 'alert_style': alert})
 
-        response = requests.get(f'http://172.21.0.2:8000/vols/infos/?numvol={flight_id}')
+        response = requests.get(f'http://172.21.0.2:8002/vols/infos/?numvol={flight_id}')
         flight = response.json()
         flight = flight[0]
         
         print(f"Flight : {flight}")
 
         #Now we get the name for the departure and arrival airports
-        departure_airport = requests.get(f'http://172.21.0.4:8000/structure/infos/aeroports/{flight["aeroport_depart_ref"]}/')
+        departure_airport = requests.get(f'http://172.21.0.4:8004/structure/infos/aeroports/{flight["aeroport_depart_ref"]}/')
         departure_airport_data = departure_airport.json()
 
-        arrival_airport = requests.get(f'http://172.21.0.4:8000/structure/infos/aeroports/{flight["aeroport_arrivee_ref"]}/')
+        arrival_airport = requests.get(f'http://172.21.0.4:8004/structure/infos/aeroports/{flight["aeroport_arrivee_ref"]}/')
         arrival_airport_data = arrival_airport.json()
 
         flight['aeroport_depart_nom'] = departure_airport_data['nom']
@@ -266,7 +266,7 @@ class FLIGHTS(TemplateView):
             print(f"Data to send : {data}")
 
             response = requests.post(
-                'http://172.21.0.2:8000/vols/infos/',
+                'http://172.21.0.2:8002/vols/infos/',
                 json=data,
                 headers={'Content-Type': 'application/json'}
             )
@@ -279,24 +279,24 @@ class FLIGHTS(TemplateView):
             else:
                 message = "Error while adding the flight, please retry later on.."
             
-            airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+            airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
             airports = airports.json()
-            planes = requests.get('http://172.21.0.4:8000/structure/infos/avions/')
+            planes = requests.get('http://172.21.0.4:8004/structure/infos/avions/')
             planes = planes.json()
             return render(request, 'staff/flights/add_flight.html', {'form': form, 'airports':airports, "planes":planes, "message":message})
         else:
             form = FlightForm()
-            airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+            airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
             airports = airports.json()
-            planes = requests.get('http://172.21.0.4:8000/structure/infos/avions/')
+            planes = requests.get('http://172.21.0.4:8004/structure/infos/avions/')
             planes = planes.json()
 
             return render(request, 'staff/flights/add_flight.html', {'form': form, 'airports':airports, "planes":planes})
 
     def showFlights(request):
-        airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+        airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
         airports = airports.json()
-        flights = requests.get('http://172.21.0.2:8000/vols/infos/')
+        flights = requests.get('http://172.21.0.2:8002/vols/infos/')
         flights = flights.json()
 
         # Create a dictionary to quickly lookup airport names by id
@@ -310,16 +310,16 @@ class FLIGHTS(TemplateView):
         return render(request, 'staff/flights/show_flights.html', {'flights': flights})
 
     def del_flight(request, flight_id):
-        response = requests.delete(f'http://172.21.0.2:8000/vols/infos/{flight_id}/')
+        response = requests.delete(f'http://172.21.0.2:8002/vols/infos/{flight_id}/')
 
         if response.status_code == 200:
             message = "This flight has been deleted successfully."
         else:
             message = "The flight could not be deleted. Please try again later."
 
-        airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+        airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
         airports = airports.json()
-        flights = requests.get('http://172.21.0.2:8000/vols/infos/')
+        flights = requests.get('http://172.21.0.2:8002/vols/infos/')
         flights = flights.json()
 
         # Create a dictionary to quickly lookup airport names by id
@@ -360,20 +360,20 @@ class FLIGHTS(TemplateView):
             print(f"Data to send : {data}")
 
             response = requests.put(
-                f'http://172.21.0.2:8000/vols/infos/{flight_id}/',
+                f'http://172.21.0.2:8002/vols/infos/{flight_id}/',
                 json=data,
                 headers={'Content-Type': 'application/json'}
             )
 
             print(f"API response status: {response.status_code}")
 
-            flight = requests.get(f'http://172.21.0.2:8000/vols/infos/{flight_id}/')
+            flight = requests.get(f'http://172.21.0.2:8002/vols/infos/{flight_id}/')
             flight = flight.json()
             form = FlightForm(flight)
 
-            airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+            airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
             airports = airports.json()
-            planes = requests.get('http://172.21.0.4:8000/structure/infos/avions/')
+            planes = requests.get('http://172.21.0.4:8004/structure/infos/avions/')
             planes = planes.json()
 
             if response.status_code == 200:
@@ -382,13 +382,13 @@ class FLIGHTS(TemplateView):
                 message = "There was a problem while modifying this flight. Please retry later on."
             return render(request, 'staff/flights/edit_flight.html', {"form": form, "airports":airports, "planes":planes, "flight": flight, "message":message})
         else:
-            flight = requests.get(f'http://172.21.0.2:8000/vols/infos/{flight_id}/')
+            flight = requests.get(f'http://172.21.0.2:8002/vols/infos/{flight_id}/')
             flight = flight.json()
             form = FlightForm(flight)
 
-            airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+            airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
             airports = airports.json()
-            planes = requests.get('http://172.21.0.4:8000/structure/infos/avions/')
+            planes = requests.get('http://172.21.0.4:8004/structure/infos/avions/')
             planes = planes.json()
 
             return render(request, 'staff/flights/edit_flight.html', {"form": form, "airports":airports, "planes":planes, "flight": flight})
@@ -403,7 +403,7 @@ class USERS(TemplateView):
             print(f"USERNAME == {username} PASSWORD == {password}")
 
             #API CALL TO AUTH THE USER
-            response = requests.post('http://172.21.0.1:8000/users/login/users/',
+            response = requests.post('http://172.21.0.8:8001/users/login/users/',
                     json={'username': username, 'password': password},
                     headers={'COntent-Type': 'application/json'}
             )
@@ -448,7 +448,7 @@ class USERS(TemplateView):
 
             print(f"Data to send : {data}")
             response = requests.post(
-                'http://172.21.0.1:8000/users/infos/users/',
+                'http://172.21.0.8:8001/users/infos/users/',
                 json=data,
                 headers={'Content-Type': 'application/json'}
             )
@@ -496,7 +496,7 @@ class USERS(TemplateView):
             }
 
             response = requests.put(
-                f'http://172.21.0.1:8000/users/infos/users/{user_ID}/', 
+                f'http://172.21.0.8:8001/users/infos/users/{user_ID}/', 
                 json=data,
                 headers={'Content-Type': 'application/json'}
             )
@@ -544,7 +544,7 @@ class USERS(TemplateView):
 
 class CancelDemands(TemplateView):
     def show_demands(request):
-        demands_unfiltered = requests.get('http://172.21.0.3:8000/reservations/infos/')
+        demands_unfiltered = requests.get('http://172.21.0.3:8003/reservations/infos/')
         demands_unfiltered = demands_unfiltered.json()
 
         #print(f"demands_unfiltered -> {demands_unfiltered}")
@@ -554,7 +554,7 @@ class CancelDemands(TemplateView):
         return render(request, 'staff/demands/show_demands.html', {'demands': demands_filtered})
     
     def show_user_detail(request, userName):
-        user = requests.get(f'http://172.21.0.1:8000/users/infos/users/?username={userName}')
+        user = requests.get(f'http://172.21.0.8:8001/users/infos/users/?username={userName}')
         user_list = user.json()
 
         if user_list:
@@ -565,7 +565,7 @@ class CancelDemands(TemplateView):
         return render(request, 'staff/demands/show_user_details.html', {"user":user})
 
     def show_flight_detail(request, numvol):
-        flight = requests.get(f'http://172.21.0.2:8000/vols/infos/?numvol={numvol}')
+        flight = requests.get(f'http://172.21.0.2:8002/vols/infos/?numvol={numvol}')
         flight_list = flight.json()
 
         if flight_list:
@@ -573,8 +573,8 @@ class CancelDemands(TemplateView):
         else:
             flight = None
 
-        airport_depart = requests.get(f"http://172.21.0.4:8000/structure/infos/aeroports/{flight['aeroport_depart_ref']}/")
-        airport_arrivee =  requests.get(f"http://172.21.0.4:8000/structure/infos/aeroports/{flight['aeroport_arrivee_ref']}/")
+        airport_depart = requests.get(f"http://172.21.0.4:8004/structure/infos/aeroports/{flight['aeroport_depart_ref']}/")
+        airport_arrivee =  requests.get(f"http://172.21.0.4:8004/structure/infos/aeroports/{flight['aeroport_arrivee_ref']}/")
 
         airport_depart = airport_depart.json()
         airport_arrivee = airport_arrivee.json()
@@ -620,7 +620,7 @@ class STAFF(TemplateView):
 
             #Start by creating regular user
             response = requests.post(
-                'http://172.21.0.1:8000/users/infos/users/',
+                'http://172.21.0.8:8001/users/infos/users/',
                 json=data,
                 headers={'Content-Type': 'application/json'}
             )
@@ -639,7 +639,7 @@ class STAFF(TemplateView):
                 }
 
                 response = requests.post(
-                    'http://172.21.0.4:8000/structure/infos/staff/',
+                    'http://172.21.0.4:8004/structure/infos/staff/',
                     json=staff_data,
                     headers={'Content-Type': 'application/json'}
                 )
@@ -671,7 +671,7 @@ class STAFF(TemplateView):
                 form.add_error(None, 'Error creating user. Please try again.')
                 return render(request, 'staff/register.html', {'form': form})
         else:
-            airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+            airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
             airports = airports.json()
 
             form = UserCreationForm()
@@ -686,7 +686,7 @@ class STAFF(TemplateView):
             print(f"USERNAME == {username} PASSWORD == {password}")
 
             #API CALL TO AUTH THE USER
-            response = requests.post('http://172.21.0.1:8000/users/login/users/',
+            response = requests.post('http://172.21.0.8:8001/users/login/users/',
                     json={'username': username, 'password': password},
                     headers={'Content-Type': 'application/json'}
             )
@@ -730,7 +730,7 @@ class STAFF(TemplateView):
             }
 
             response = requests.put(
-                f'http://172.21.0.1:8000/users/infos/users/{user_ID}/', 
+                f'http://172.21.0.8:8001/users/infos/users/{user_ID}/', 
                 json=data,
                 headers={'Content-Type': 'application/json'}
             )
@@ -793,7 +793,7 @@ class AIRPORTS(TemplateView):
 
             print(f"Data to send : {data}")
 
-            response = requests.post('http://172.21.0.4:8000/structure/infos/aeroports/',
+            response = requests.post('http://172.21.0.4:8004/structure/infos/aeroports/',
                     json=data,
                     headers={'Content-Type': 'application/json'}
             )
@@ -814,7 +814,7 @@ class AIRPORTS(TemplateView):
             return render(request, 'staff/airports/add_airport.html', {'form': form})
 
     def showAirports(request):
-        airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+        airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
         airports = airports.json()
 
         print(f"Airports : {airports}")
@@ -822,11 +822,11 @@ class AIRPORTS(TemplateView):
         return render(request, 'staff/airports/show_airports.html', {'airports': airports})
 
     def del_airport(request, airport_id):
-        response = requests.delete(f'http://172.21.0.4:8000/structure/infos/aeroports/{airport_id}/')
+        response = requests.delete(f'http://172.21.0.4:8004/structure/infos/aeroports/{airport_id}/')
 
         print(f"Response : {response.status_code}")
         
-        airports = requests.get('http://172.21.0.4:8000/structure/infos/aeroports/')
+        airports = requests.get('http://172.21.0.4:8004/structure/infos/aeroports/')
         airports = airports.json()
 
         if response.status_code == 200:
@@ -850,7 +850,7 @@ class AIRPORTS(TemplateView):
             }
 
             response = requests.put(
-                f'http://172.21.0.4:8000/structure/infos/aeroports/{airport_id}/',
+                f'http://172.21.0.4:8004/structure/infos/aeroports/{airport_id}/',
                 json=data,
                 headers={'Content-Type': 'application/json'}
                 )
@@ -863,7 +863,7 @@ class AIRPORTS(TemplateView):
                 message = "The airport could not be updated. Please try again later."
             return render(request, 'staff/airports/edit_airport.html', {'form': form, 'message': message})
         else:
-            airport = requests.get(f'http://172.21.0.4:8000/structure/infos/aeroports/{airport_id}/')
+            airport = requests.get(f'http://172.21.0.4:8004/structure/infos/aeroports/{airport_id}/')
             airport = airport.json()
 
             form = AirportForm(data=airport)

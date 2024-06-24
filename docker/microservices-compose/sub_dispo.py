@@ -23,7 +23,7 @@ class SubscriberDispo():
     async def dispo(self, msg):
         async def get_avion(numvol):
             print(numvol)
-            url = f"http://172.21.0.2:8000/vols/infos/?numvol={numvol}"
+            url = f"http://172.21.0.2:8002/vols/infos/?numvol={numvol}"
             headers = {"Content-Type": "application/json"}
             response = requests.get(url, headers=headers)
             response_data = response.json()
@@ -31,7 +31,7 @@ class SubscriberDispo():
             return avion
         
         async def get_dispo(avion):
-            url = f"http://172.21.0.4:8000/structure/infos/avions/?modele={avion}"
+            url = f"http://172.21.0.2:8004/structure/infos/avions/?modele={avion}"
             headers = {"Content-Type": "application/json"}
             response = requests.get(url, headers=headers)
             response_data = response.json()
@@ -39,7 +39,7 @@ class SubscriberDispo():
             return dispo
         
         async def get_nb_reservations(numvol):
-            url = f"http://172.21.0.3:8000/reservations/infos/"
+            url = f"http://172.21.0.3:8003/reservations/infos/"
             headers = {"Content-Type": "application/json"}
             response = requests.get(url, headers=headers)
             response_data = response.json()
@@ -65,7 +65,7 @@ class SubscriberDispo():
                 'demande': 'False',
                 'annulation': 'False'
             }
-            response = requests.post(f"http://172.21.0.3:8000/reservations/infos/",
+            response = requests.post(f"http://172.21.0.3:8003/reservations/infos/",
                                     data=json.dumps(data),
                                     headers={'Content-Type': 'application/json'})
             print(response.json()["user_ref"])
@@ -77,7 +77,7 @@ class SubscriberDispo():
         return {"status": "False"}
 
     async def run_subscriber(self):
-        self.nc = await nats.connect("nats://192.168.1.101:4222")
+        self.nc = await nats.connect("nats://172.21.0.10:4222")
 
         await self.nc.subscribe(f"dispo.*", cb=self.message_handler)
 

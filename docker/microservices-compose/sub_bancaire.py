@@ -26,7 +26,7 @@ async def banque(msg):
         
         Args:
             username (str): Le nom d'utilisateur associé à la réponse."""
-        user_response = requests.get(f"http://172.21.0.1:8000/users/infos/banque/?username={username}")
+        user_response = requests.get(f"http://172.21.0.8:8001/users/infos/banque/?username={username}")
         user_data = user_response.json()
         rib = user_data[0]['rib']
         print(rib)
@@ -37,7 +37,7 @@ async def banque(msg):
         
         Args:
             numvol (int): Le numéro de vol associé à la réponse."""
-        vol_response = requests.get(f"http://172.21.0.2:8000/vols/infos/?numvol={numvol}")
+        vol_response = requests.get(f"http://172.21.0.2:8002/vols/infos/?numvol={numvol}")
         vol_data = vol_response.json()
         prix = vol_data[0]['prix']
         return prix
@@ -50,7 +50,7 @@ async def banque(msg):
             numvol (int): Le numéro de vol associé à la réponse.
             rib (int): Le RIB associé à la réponse.
             prix (int): Le prix associé à la réponse."""
-        banque_response = requests.get(f"http://172.21.0.1:8000/users/rib/banque/?rib={rib}")
+        banque_response = requests.get(f"http://172.21.0.8:8001/users/rib/banque/?rib={rib}")
         banque_data = banque_response.json()
         id_rib = banque_data[0]['id']
         argent = banque_data[0]['argent']
@@ -70,7 +70,7 @@ async def banque(msg):
         if argent > prix:
             print(argent, prix)
             argent-= prix
-            response = requests.put(f"http://172.21.0.1:8000/users/infos/banque/{id_rib}/", 
+            response = requests.put(f"http://172.21.0.8:8001/users/infos/banque/{id_rib}/", 
                                     data=f'{{"argent": {argent}}}', 
                                     headers={'Content-Type': 'application/json'})
             response_data = {"status": "True", "argent": argent, "username": username}
@@ -89,7 +89,7 @@ async def banque(msg):
 
 async def run_subscriber():
     """Exécute le serveur NATS."""
-    nc = await nats.connect("nats://192.168.1.101:4222")
+    nc = await nats.connect("nats://172.21.0.10:4222")
 
     await nc.subscribe("banque.*", cb=message_handler)
 
