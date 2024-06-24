@@ -41,6 +41,10 @@ footer{
 #title{
     text-align: center;
     margin: 1em 0em 1em 0em;
+    color: rgb(36, 36, 36);
+    
+    z-index: 5;
+    position: relative;
 }
 
 .bigger-text > p{
