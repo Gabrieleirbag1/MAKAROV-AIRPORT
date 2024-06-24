@@ -1,0 +1,37 @@
+{% extends "staff/general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - HOME</title>
+{% endblock page_title %}
+
+{% block content%}
+  <div id="empty-div" style="min-height: 80px;"></div>
+  
+  <h1 class="text-center mt-4">STAFF HOME PAGE</h1>
+  <p class="text-center">Use the nav here above to stroll through</p>
+
+  <!-- ======= Modal Section ======= -->
+  <div class="modal fade" id="contactFormModal" tabindex="-1" aria-labelledby="contactFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactFormModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modalBody">
+
+        </div>
+        <div class="modal-footer">
+          <button id="modalButton" type="button" class="btn btn-info" data-bs-dismiss="modal"></button>
+        </div>
+      </div>
+    </div>
+  </div><!-- End  Modal Section -->
+
+  <button type="button" id="hiddenModalButton"  data-bs-toggle="modal" data-bs-target="#contactFormModal" style="display: none;">
+  </button>
+
+{% endblock content%}
+

@@ -1,0 +1,53 @@
+{% extends "staff/general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - DEMANDS</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-show-demands.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  <main>
+
+    {% for demand in demands %}
+        <div class="demand-card mt-3">
+
+            <div class="row">
+                <div class="info-container col-12">
+                    <p><strong>Demand from :</strong> {{ demand.user_ref }}</p>
+                    <a href={% url "makarov_gp:show_user_detail" userName=demand.user_ref %} class="" target="_blank">[see info]</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="info-container col-12">
+                    <p><strong>Flight : </strong>{{ demand.vol_ref }}</p>
+                    <a href={% url "makarov_gp:show_flight_detail" numvol=demand.vol_ref %} target="_blank">[see info]</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="buttons col-12">
+                    <a href={% url "makarov_gp:validate_demand" numvol=demand.vol_ref username=demand.user_ref %}><button class="btn btn-success">Accept</button></a>
+                    <a href={% url "makarov_gp:reject_demand" numvol=demand.vol_ref username=demand.user_ref %}><button class="btn btn-danger">Reject</button></a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+  </main>
+    
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  {% if message %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endif %}
+
+
+{% endblock content%}

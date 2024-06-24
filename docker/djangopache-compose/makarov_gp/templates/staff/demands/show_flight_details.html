@@ -1,0 +1,64 @@
+{% extends "staff/general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - USER</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/user_detail.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  <main>
+    <h4>Flight N°{{ flight.numvol }}</h4>
+    <div class="row">
+        <div class="fn-container col-6">
+            <p><strong>FROM :</strong> {{ flight.aeroport_depart_nom }}</p>
+        </div>
+        <div class="fn-container col-6">
+            <p><strong>TO :</strong> {{ flight.aeroport_arrivee_nom }}</p>
+        </div>
+    <div>
+    <div class="row">
+        <div class="fn-container col-6">
+            <p><strong>Departure date :</strong> {{ flight.date_depart }}</p>
+        </div>
+        <div class="fn-container col-6">
+            <p><strong>Arrival Date :</strong> {{ flight.date_arrivee }}</p>
+        </div>
+    <div>
+    <div class="row">
+        <div class="fn-container col-6">
+            <p><strong>Departure time :</strong> {{ flight.heure_depart }}</p>
+        </div>
+        <div class="fn-container col-6">
+            <p><strong>Arrival time :</strong> {{ flight.heure_arrivee }}</p>
+        </div>
+    <div>
+    <div class="row">
+        <div class="fn-container col-4">
+            <p><strong>Departure time :</strong> {{ flight.prix }}</p>
+        </div>
+        <div class="fn-container col-4">
+            <p><strong>Arrival time :</strong> {{ flight.avion_ref }}</p>
+        </div>
+        <div class="fn-container col-4">
+            <p><strong>Arrival time :</strong> {{ flight.type }}</p>
+        </div>
+    <div>
+  </main>
+    
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  {% if message %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endif %}
+
+
+{% endblock content%}

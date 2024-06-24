@@ -1,0 +1,207 @@
+{% extends "general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - FLIGHTS</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-flight-list.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+
+<div id="overlay" class="overlay">
+
+</div>
+
+<div id="empty-div" style="min-height: 80px;"></div>
+
+<div id="form-container" class="container bg-light p-3 rounded mt-5">
+    <form method="post" class="row g-3" novalidate>
+        {% csrf_token %}
+        <div class="col-md-4">
+        <label for="trip-input" class="form-label">{% trans "Trip" %}</label>
+        <select class="form-select" id="trip-input" required name="trip">
+            <option selected disabled value="">{% trans "Choose..." %}</option>
+            <option value="round-trip">{% trans "Round-Trip" %}</option>
+            <option value="one-way">{% trans "One-way ticket" %}</option>
+        </select>
+        <div class="invalid-feedback">
+            {% trans "Please select a valid option." %}
+        </div>
+        </div>
+
+
+        <div class="col-md-4">
+        <label for="departure-input" class="form-label">{% trans "Departure" %}</label>
+        <select class="form-select" id="departure-input" required name="departure">
+            <option selected disabled value="">{% trans "Choose..." %}</option>
+            {% for airport in airports %}
+                <option value="{{ airport.id }}">{{ airport.nom }}</option>
+            {% endfor %}
+        </select>
+        <div class="invalid-feedback">
+            {% trans "Please select a valid option." %}
+        </div>
+        </div>
+
+
+        <div class="col-md-4">
+        <label for="arrival-input" class="form-label">{% trans "Arrival" %}</label>
+        <select class="form-select" id="arrival-input" required name="arrival">
+            <option selected disabled value="">{% trans "Choose..." %}</option>
+            {% for airport in airports %}
+                <option value="{{ airport.id }}">{{ airport.nom }}</option>
+            {% endfor %}
+        </select>
+        <div class="invalid-feedback">
+            {% trans "Please select a valid option." %}
+        </div>
+        </div>
+
+
+        <div class="col-md-3">
+        <label for="date-input" class="form-label">{% trans "Date" %}</label>
+        <input type="date" class="form-control" id="date-input" required name="date">
+        <div class="invalid-feedback">
+            {% trans "Please select a date." %}
+        </div>
+        </div>
+
+
+        <div class="col-md-3">
+        <label for="amount-adults" class="form-label">{% trans "Adults" %}</label>
+        <select class="form-select" id="amount-adults" required name="adults">
+            <option selected disabled value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select>
+        </div>
+
+
+        <div class="col-md-3">
+        <label for="amount-kids" class="form-label">{% trans "Kids" %}</label>
+        <select class="form-select" id="amount-kids" required name="kids">
+            <option selected disabled value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select>
+        </div>
+
+        <div class="col-md-3">
+        <label for="class" class="form-label">{% trans "Class" %}</label>
+        <select class="form-select" id="class" required name="class">
+            <option selected disabled value="">{% trans "Choose..." %}</option>
+            <option value="E">{% trans "Economy" %}</option>
+            <option value="B">{% trans "Business" %}</option>
+            <option value="F">{% trans "First Class" %}</option>
+        </select>
+        <div class="invalid-feedback">
+            {% trans "Please select a travel class." %}
+        </div>
+        </div>
+
+        <div class="col-12">
+        <button id="search-button" class="btn btn-primary" type="submit">{% trans "Search for a flight" %}</button>
+        </div>
+  </form>
+</div>
+
+<h3 id="title">Flights found</h3>
+
+{% for flight in flights %}
+
+    <div class="flight_line">
+        <div class="row bigger-text"><p>FROM</p></div>
+        <div class="line-cadre">
+            <p>{{ flight.aeroport_depart_nom }}</p>
+            <span class="sub-span">
+                <p>{{ flight.date_depart }}</p>
+                <p>{{ flight.heure_depart }}</p>
+            </span>
+        </div>
+        <div class="row bigger-text"><p>TO</p></div>
+        <div class="line-cadre">
+            <p>{{ flight.aeroport_arrivee_nom }}</p>
+            <span class="sub-span">
+                <p>{{ flight.date_arrivee }}</p>
+                <p>{{ flight.heure_arrivee }}</p>
+            </span>
+        </div>
+        <hr class="custom-hr">
+        <div class="line-cadre">
+            <p>{{ flight.prix }} €</p>
+            {% if flight.type == "B" %}
+                <p>Business</p>
+            {% elif flight.type == "E" %}
+                <p>Economy</p>
+            {% else %}
+                <p>First Class</p>
+            {% endif %}
+        </div>
+        <span class="middle-button">
+            <a id="buy-ticket-link-{{ flight.id }}" href="{% url 'makarov_gp:buy_ticket' flight_id=flight.numvol %}">
+                <button id="ticket-buy-button-{{ flight.id }}" class="btn btn-info">Buy a ticket</button>
+            </a>
+        </span>
+    </div>
+
+{% endfor %}
+
+<div style="min-height: 5em;"></div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.getElementById('overlay');
+    
+        // Iterate over each flight and attach event listeners to buy ticket buttons
+        {% for flight in flights %}
+            const buyTicketButton{{ flight.id }} = document.getElementById('ticket-buy-button-{{ flight.id }}');
+            const buyTicketLink{{ flight.id }} = document.getElementById('buy-ticket-link-{{ flight.id }}');
+    
+            buyTicketButton{{ flight.id }}.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default action of the button click
+    
+                // Show the overlay
+                overlay.style.display = 'block';
+    
+                // Show "Wait while we contact your bank..." message
+                const modalContent = document.createElement('div');
+                modalContent.className = 'modal-content';
+                modalContent.id = "modal-content";
+                modalContent.innerHTML = '<p>Please wait while we contact your bank...</p>';
+    
+                // Append the loading image (wait.gif) if it exists
+                const waitImage = document.createElement('img');
+                waitImage.src = "{% static 'libs/assets/img/preloader.gif' %}"; // Adjust the path to your wait.gif
+                waitImage.className = 'loading-image'; // Add a class to style the image if needed
+                modalContent.appendChild(waitImage);
+    
+                overlay.appendChild(modalContent);
+    
+                // Simulate a loading delay
+                setTimeout(function() {
+                    // Redirect to the actual ticket-buying URL after 2 seconds
+                    const ticketUrl = buyTicketLink{{ flight.id }}.getAttribute('href');
+                    window.location.href = ticketUrl;
+                }, 3500); // Wait for 2 seconds before redirecting
+            });
+        {% endfor %}
+    });
+</script>
+
+{% endblock content%}

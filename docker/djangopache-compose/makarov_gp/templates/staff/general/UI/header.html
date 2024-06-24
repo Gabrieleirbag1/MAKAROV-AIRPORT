@@ -1,0 +1,41 @@
+{% load static i18n %}
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div class="logo">
+        <a href="#"><img src={% static "libs/assets/img/logo_medium.webp" %} alt="" class="img-fluid"></a>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href={% url "makarov_gp:home_staff" %}>{% trans "Home" %}</a></li>
+          <li class="dropdown"><a href="#"><span>{% trans "Flights" %}</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href={% url "makarov_gp:showFlights" %}>{% trans "Show flights" %}</a></li>
+              <li><a href={% url "makarov_gp:addFlight" %}>{% trans "Add flight" %}</a></li>
+            </ul>
+          </li>
+          
+          <li class="dropdown"><a href="#"><span>{% trans "Airports" %}</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href={% url "makarov_gp:showAirports" %}>{% trans "Show airports" %}</a></li>
+              <li><a href={% url "makarov_gp:addAirport" %}>{% trans "Add Airport" %}</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href={% url "makarov_gp:show_demands" %}>{% trans "Cancel demands" %}</a></li>
+          {% if request.session.user.auth %}
+            <li><a class="nav-link scrollto" href={% url "makarov_gp:staff_profile" %}>{% trans "Profile" %}</a></li>
+            <li><a class="nav-link scrollto" href={% url "makarov_gp:logout" %}>{% trans "Logout" %}</a></li>
+          {% else %}
+            <li><a class="nav-link scrollto" href={% url "makarov_gp:login" %}>{% trans "Login" %}</a></li>
+            <li><a class="nav-link scrollto" href={% url "makarov_gp:register" %}>{% trans "Register" %}</a></li>
+          {% endif %}
+          
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->

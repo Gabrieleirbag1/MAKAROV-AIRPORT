@@ -1,0 +1,31 @@
+body{
+    background: #dfdfdf;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+footer{
+    z-index: 2;
+    background: white;
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 100%;
+}
+
+main{
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid gray;
+
+    padding: 1em;
+    width: 30%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    margin: 4em auto 1em auto;
+}

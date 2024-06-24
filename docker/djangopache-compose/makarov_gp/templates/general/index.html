@@ -1,0 +1,1065 @@
+{% extends "general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - HOME</title>
+{% endblock page_title %}
+
+{% block content%}
+
+  <!-- ======= hero Section ======= -->
+  <section id="hero">
+    <div class="hero-container">
+      <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="500000">
+
+        <ol id="hero-carousel-indicators" class="carousel-indicators"></ol>
+
+        <div class="carousel-inner" role="listbox">
+
+          <div class="carousel-item active" style="background-image: url({% static "libs/assets/img/hero-carousel/1.webp" %})">
+            <div class="carousel-container">
+              <img src={% static 'libs/assets/img/Banner_logo.svg' %} class="rounded img-fluid mb-4" style="max-width: 40%;">
+              <div class="row container bg-light p-3 rounded">
+
+                <form method="post" class="row g-3" novalidate>
+                  {% csrf_token %}
+                  <div class="col-md-4">
+                    <label for="trip-input" class="form-label">{% trans "Trip" %}</label>
+                    <select class="form-select" id="trip-input" required name="trip">
+                      <option selected disabled value="">{% trans "Choose..." %}</option>
+                      <option value="round-trip">{% trans "Round-Trip" %}</option>
+                      <option value="one-way">{% trans "One-way ticket" %}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        {% trans "Please select a valid option." %}
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-4">
+                    <label for="departure-input" class="form-label">{% trans "Departure" %}</label>
+                    <select class="form-select" id="departure-input" required name="departure">
+                      <option selected disabled value="">{% trans "Choose..." %}</option>
+                      {% for airport in airports %}
+                        <option value="{{ airport.id }}">{{ airport.nom }}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">
+                        {% trans "Please select a valid option." %}
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-4">
+                    <label for="arrival-input" class="form-label">{% trans "Arrival" %}</label>
+                    <select class="form-select" id="arrival-input" required name="arrival">
+                      <option selected disabled value="">{% trans "Choose..." %}</option>
+                      {% for airport in airports %}
+                        <option value="{{ airport.id }}">{{ airport.nom }}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">
+                        {% trans "Please select a valid option." %}
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-3">
+                    <label for="date-input" class="form-label">{% trans "Date" %}</label>
+                    <input type="date" class="form-control" id="date-input" required name="date">
+                    <div class="invalid-feedback">
+                        {% trans "Please select a date." %}
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-3">
+                    <label for="amount-adults" class="form-label">{% trans "Adults" %}</label>
+                    <select class="form-select" id="amount-adults" required name="adults">
+                      <option selected disabled value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                    </select>
+                  </div>
+
+
+                  <div class="col-md-3">
+                    <label for="amount-kids" class="form-label">{% trans "Kids" %}</label>
+                    <select class="form-select" id="amount-kids" required name="kids">
+                      <option selected disabled value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3">
+                    <label for="class" class="form-label">{% trans "Class" %}</label>
+                    <select class="form-select" id="class" required name="class">
+                      <option selected disabled value="">{% trans "Choose..." %}</option>
+                      <option value="E">{% trans "Economy" %}</option>
+                      <option value="B">{% trans "Business" %}</option>
+                      <option value="F">{% trans "First Class" %}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        {% trans "Please select a travel class." %}
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <button id="search-button" class="btn btn-primary" type="submit">{% trans "Search for a flight" %}</button>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item" style="background-image: url({% static "libs/assets/img/hero-carousel/2.webp" %})">
+            <div class="carousel-container">
+              <div class="container">
+                <h2>{% trans "Experience the Sky Like Never Before" %}</h2>
+                <p>{% trans "Makarov Airlines - Where Every Journey is as Memorable as the Destination." %}</p>
+                <a href="#about" class="btn-get-started scrollto">{% trans "Get Started" %}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item" style="background-image: url({% static "libs/assets/img/hero-carousel/3.jpg" %})">
+            <div class="carousel-container">
+              <div class="container">
+                <h2>{% trans "Fly Beyond Borders" %}</h2>
+                <p>{% trans "With us, you don't have to worry about feeling restrained, just leave !" %}</p>
+                <a href="#about" class="btn-get-started scrollto">{% trans "Get Started" %}</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+        </a>
+
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+          <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+        </a>
+
+      </div>
+    </div>
+  </section><!-- End Hero Section -->
+
+  <main id="main">
+    <!-- ======= About Section ======= -->
+    <div id="about" class="about-area area-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>About Makarov Airlines</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- single-well start-->
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="well-left">
+              <div class="single-well">
+                <a href="#">
+                  <img src="{% static 'libs/assets/img/logo_medium_coin_droit_rogne.webp' %}" alt="" class="img-fluid">
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- single-well end-->
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="well-middle">
+              <div class="single-well">
+                <a href="#">
+                  <h4 class="sec-head">{% trans "Flight Operations" %}</h4>
+                </a>
+                <p>
+                  {% trans "Makarov Airlines ensures efficient management and operation of flights, with a steadfast commitment to safety and customer satisfaction. Our dedicated team expertly handles complex logistics, providing superior air travel experiences that meet the highest industry standards." %}
+                </p>
+                <ul>
+                  <li>
+                    <i class="bi bi-check"></i> {% trans "Cabin Comfort Design" %}
+                  </li>
+                  <li>
+                    <i class="bi bi-check"></i> {% trans "Aircraft Maintenance" %}
+                  </li>
+                  <li>
+                    <i class="bi bi-check"></i> {% trans "In-flight Service Enhancement" %}
+                  </li>
+                  <li>
+                    <i class="bi bi-check"></i> {% trans "Airport Lounge Services" %}
+                  </li>
+                  <li>
+                    <i class="bi bi-check"></i> {% trans "Aviation Safety Compliance" %}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- End col-->
+        </div>
+      </div>
+    </div><!-- End About Section -->
+
+    <!-- ======= Services Section ======= -->
+    <div id="services" class="services-area area-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline services-head text-center">
+              <h2>{% trans "Our Services" %}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <!-- Start Left services -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-person-raised-hand"></i>
+                  </a>
+                  <h4>{% trans "Customer Service" %}</h4>
+                  <p>
+                    {% trans "Dedicated to providing top-notch service, from booking to landing, ensuring a seamless and pleasant journey for every traveler." %}
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-card-checklist"></i>
+                  </a>
+                  <h4>{% trans "Safety Protocols" %}</h4>
+                  <p>
+                    {% trans "Implementing" %} <strong>{% trans "rigorous" %}</strong> {% trans "safety measures and continuous staff training to maintain our commitment to passenger" %} <strong>{% trans "safety" %}</strong> {% trans "at all times" %}.
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <!-- end col-md-4 -->
+            <div class=" about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-award-fill"></i>
+                  </a>
+                  <h4>{% trans "Cabin Design" %}</h4>
+                  <p>
+                    {% trans "Focused on enhancing passenger comfort and convenience by integrating state-of-the-art design and technology in our aircraft cabins." %}
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <!-- end col-md-4 -->
+            <div class=" about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-airplane-engines"></i>
+                  </a>
+                  <h4>{% trans "Flight Operations" %}</h4>
+                  <p>
+                    {% trans "Ensuring optimal flight schedules and routes to provide timely and efficient travel experiences for all passengers." %}
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <!-- End Left services -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <!-- end col-md-4 -->
+            <div class=" about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-brightness-high"></i>
+                  </a>
+                  <h4>{% trans "In-flight Entertainment" %}</h4>
+                  <p>
+                    {% trans "Offering a wide range of entertainment options to keep passengers engaged and comfortable throughout their flight." %}
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+          <!-- End Left services -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <!-- end col-md-4 -->
+            <div class=" about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+                    <i class="bi bi-calendar4-week"></i>
+                  </a>
+                  <h4>{% trans "24/7 Customer Support" %}</h4>
+                  <p>
+                    {% trans "Available around the clock to assist with bookings, flight changes, and to address any inquiries or concerns our passengers may have." %}
+                  </p>
+                </div>
+              </div>
+              <!-- end about-details -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Services Section -->
+
+    <!-- ======= Team Section ======= -->
+    <div id="team" class="our-team-area area-padding about-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>{% trans "Our special Team" %}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="single-team-member">
+              <div class="team-img">
+                <a href="#">
+                  <img src={% static "libs/assets/img/team/1.jpg" %} alt="">
+                </a>
+                <div class="team-social-icon text-center">
+                  <ul>
+                    <li>
+                      <a href="https://www.facebook.com/painharold/?locale=hu_HU">
+                        <i class="bi bi-facebook"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://twitter.com/andrasarato?lang=en">
+                        <i class="bi bi-twitter"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.instagram.com/painharold/?hl=en">
+                        <i class="bi bi-instagram"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="team-content text-center">
+                <h4>András István Arató</h4>
+                <p>{% trans "PR Crisis Manager" %}</p>
+              </div>
+            </div>
+          </div>
+          <!-- End column -->
+          <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="single-team-member">
+              <div class="team-img">
+                <a href="#">
+                  <img src={% static "libs/assets/img/team/3.jpg" %} alt="">
+                </a>
+                <div class="team-social-icon text-center">
+                  <ul>
+                    <li>
+                      <a href="#">
+                        <i class="bi bi-facebook"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="bi bi-twitter"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="bi bi-instagram"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="team-content text-center">
+                <h4>Lellien Linda</h4>
+                <p>{% trans "Chief Aviation Officer" %}</p>
+              </div>
+            </div>
+          </div>
+          <!-- End column -->
+          <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="single-team-member">
+              <div class="team-img">
+                <a href="#">
+                  <img src={% static "libs/assets/img/team/2.webp" %} alt="">
+                </a>
+                <div class="team-social-icon text-center">
+                  <ul>
+                    <li>
+                      <a href="#">
+                        <i class="bi bi-facebook"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="bi bi-twitter"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="bi bi-instagram"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="team-content text-center">
+                <h4>Владимир Макаров</h4>
+                <p>{% trans "Chief Executive Officer and Founder" %}</p>
+              </div>
+            </div>
+          </div>
+          <!-- End column -->
+          <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="single-team-member">
+              <div class="team-img">
+                <a href="#">
+                  <img src={% static "libs/assets/img/team/4.jpg" %} alt="">
+                </a>
+                <div class="team-social-icon text-center">
+                  <ul>
+                    <li>
+                      <a href="#">
+                        <i class="bi bi-facebook"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="bi bi-twitter"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="bi bi-instagram"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="team-content text-center">
+                <h4>Jhon Powel</h4>
+                <p>{% trans "Chief Financial Officer" %}</p>
+              </div>
+            </div>
+          </div>
+          <!-- End column -->
+        </div>
+      </div>
+    </div><!-- End Team Section -->
+
+    <!-- ======= Rviews Section ======= -->
+    <div class="reviews-area">
+      <div class="row g-0">
+        <div class="col-lg-6">
+          <img src={% static "libs/assets/img/about/2.jpg" %} alt="" class="img-fluid">
+        </div>
+        <div class="col-lg-6 work-right-text d-flex align-items-center">
+          <div class="px-5 py-5 py-lg-0">
+            <h2>{% trans "Working for a better transport, together." %}</h2>
+            <h5>{% trans "Ideas, feedbacks, we can't wait to hear what you have to say about us !" %}</h5>
+            <a href="#contact" class="ready-btn scrollto">{% trans "Contact us" %}</a>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Rviews Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <div id="portfolio" class="portfolio-area area-padding fix">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>{% trans "Our Fleet" %}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row wesome-project-1 fix">
+          <!-- Start Portfolio -page -->
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ul id="portfolio-flters">
+              <li data-filter="*" class="filter-active">{% trans "All" %}</li>
+              <li data-filter=".filter-app">{% trans "Narrow-body" %}</li>
+              <li data-filter=".filter-card">{% trans "Wide-body" %}</li>
+              <li data-filter=".filter-web">{% trans "Very Large Aircraft" %}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row awesome-project-content portfolio-container">
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-card">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/2.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/2.jpg" %}>
+                      <h4>Boeing 777-300ER</h4>
+                      <span>365 - 451 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-card">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/5.png" %} alt="" /></a>
+                <div class="add-actions text-center text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/5.png" %}>
+                      <h4>Ilyushin II-96</h4>
+                      <span>300 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-app">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/6.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/6.jpg" %}>
+                      <h4>Sukhoi SSJ100</h4>
+                      <span>87 - 98 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-app">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/1.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/1.jpg" %}>
+                      <h4>BOEING 737-800</h4>
+                      <span>162 - 189 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-app">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/4.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/4.jpg" %}>
+                      <h4>AIRBUS A220-300</h4>
+                      <span>130 - 160 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-web">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/3.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/3.jpg" %}>
+                      <h4>AIRBUS A380</h4>
+                      <span>500 - 853 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-web">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/7.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/7.jpg" %}>
+                      <h4>Boeing 747-8 Intercontinental</h4>
+                      <span>467 - 605 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-app">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/8.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/8.jpg" %}>
+                      <h4>Airbus A320</h4>
+                      <span>150 - 186 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-card">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/9.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/9.jpg" %}>
+                      <h4>Airbus A350-900</h4>
+                      <span>325 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-card">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/10.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/10.jpg" %}>
+                      <h4>Boeing 787-9 Dreamliner</h4>
+                      <span>296 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-card">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/11.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/11.jpg" %}>
+                      <h4>Ilyushin II-86</h4>
+                      <span>350 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+          <!-- portfolio-item start -->
+          <div class="col-md-4 col-sm-4 col-xs-12 portfolio-item filter-web">
+            <div class="single-awesome-project">
+              <div class="awesome-img">
+                <a href="#"><img src={% static "libs/assets/img/planes/12.jpg" %} alt="" /></a>
+                <div class="add-actions text-center">
+                  <div class="project-dec">
+                    <a class="portfolio-lightbox" data-gallery="myGallery" href={% static "libs/assets/img/planes/12.jpg" %}>
+                      <h4>Boeing 747-400</h4>
+                      <span>416 - 660 Passengers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- portfolio-item end -->
+
+        </div>
+      </div>
+    </div><!-- End Portfolio Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+    <div id="testimonials" class="testimonials">
+      <div class="container">
+
+        <div class="testimonials-slider swiper">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src={% static "libs/assets/img/testimonials/testimonials-1.webp" %} class="testimonial-img" alt="">
+                <h3>Max Jordan</h3>
+                <h4>{% trans "Flight Attendant" %}</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                    {% trans "Working at our airline has truly been a journey of personal and professional growth. Every day, I have the privilege of meeting people from all walks of life and ensuring their comfort and safety on their travels. It's a rewarding experience when passengers disembark with a smile, thanking us for a pleasant flight." %}
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src={% static "libs/assets/img/testimonials/testimonials-2.jpg" %} class="testimonial-img" alt="">
+                <h3>Ella Thomson</h3>
+                <h4>{% trans "Customer Service Agent" %}</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                    {% trans "I love the dynamic environment of working at the airport. Each day brings new challenges and learning opportunities. Our team is like a family; we support each other in providing the best service to our customers, helping to resolve their issues and ensuring they have a smooth journey from check-in to boarding." %}
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src={% static "libs/assets/img/testimonials/testimonials-4.jpg" %} class="testimonial-img" alt="">
+                <h3>Liam Cheng</h3>
+                <h4>{% trans "Aircraft Maintenance Technician" %}</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                    {% trans "There's a profound sense of responsibility in maintaining the safety and readiness of aircraft. It's not just about the technical skills, which are critical, but also about maintaining a mindset of continual improvement and adherence to safety protocols. Our work behind the scenes is key to the airline's success and passenger safety." %}
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src={% static "libs/assets/img/testimonials/testimonials-3.Jpg" %} class="testimonial-img" alt="">
+                <h3>Sophie Ali</h3>
+                <h4>{% trans "Baggage Handler" %}</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                    {% trans "My role at the airline is physically demanding but extremely vital. Ensuring that every passenger's luggage is handled properly and makes it on the right flight is a challenge I take seriously. It's satisfying to see operations run smoothly because of our efficiency and hard work on the ground." %}
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src={% static "libs/assets/img/testimonials/testimonials-5.jpeg" %} class="testimonial-img" alt="">
+                <h3>Connor Reyes</h3>
+                <h4>{% trans "In-flight Catering Coordinator" %}</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                    {% trans "Being part of the in-flight catering team allows me to contribute to the overall travel experience of our passengers. From selecting menu items to ensuring meals are prepared and delivered on time, our goal is to enhance the flying experience with quality and taste, making every meal aloft memorable." %}
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </div><!-- End Testimonials Section -->
+
+    <!-- ======= Blog Section ======= -->
+    <div id="blog" class="blog-area">
+      <div class="blog-inner area-padding">
+        <div class="blog-overly"></div>
+        <div class="container ">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="section-headline text-center">
+                <h2>{% trans "Latest News" %}</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Start Left Blog -->
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="single-blog">
+                <div class="single-blog-img">
+                  <a href="blog.html">
+                    <img src={% static "libs/assets/img/blog/1.jpg" %} alt="">
+                  </a>
+                </div>
+                <div class="blog-meta">
+                  <span class="comments-type">
+                    <i class="fa fa-comment-o"></i>
+                    <a href="#">130 comments</a>
+                  </span>
+                  <span class="date-type">
+                    <i class="fa fa-calendar"></i>2023-10-05 / 09:10:16
+                  </span>
+                </div>
+                <div class="blog-text">
+                  <h4>
+                    <a href="blog.html">{% trans "Makarov Airlines Enhances Efficiency with Team Restructuring" %}</a>
+                  </h4>
+                  <p>
+                    {% trans "Makarov Airlines today announced a workforce optimization strategy to elevate operational efficiency and enhance service quality. This decisive move positions us for sustainable growth and continued competitive pricing." %}
+                  </p>
+                </div>
+                <span>
+                  <a href="blog.html" class="ready-btn">{% trans "Read more" %}</a>
+                </span>
+              </div>
+              <!-- Start single blog -->
+            </div>
+            <!-- End Left Blog-->
+            <!-- Start Left Blog -->
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="single-blog">
+                <div class="single-blog-img">
+                  <a href="blog.html">
+                    <img src={% static "libs/assets/img/blog/2.jpg" %} alt="">
+                  </a>
+                </div>
+                <div class="blog-meta">
+                  <span class="comments-type">
+                    <i class="fa fa-comment-o"></i>
+                    <a href="#">648 comments</a>
+                  </span>
+                  <span class="date-type">
+                    <i class="fa fa-calendar"></i>2020-03-05 / 02:44:41
+                  </span>
+                </div>
+                <div class="blog-text">
+                  <h4>
+                    <a href="blog.html">{% trans "Innovative Safety Enhancements Underway at Makarov Airlines" %}</a>
+                  </h4>
+                  <p>
+                    {% trans "In our quest for cutting-edge aviation solutions, some flights are testing new, non-critical component designs that" %} <strong>{% trans "will not fall-off" %}</strong> {% trans "this time. These innovations are key to advancing our commitment to safety and operational excellence." %}
+                  </p>
+                </div>
+                <span>
+                  <a href="blog.html" class="ready-btn">{% trans "Read more" %}</a>
+                </span>
+              </div>
+              <!-- Start single blog -->
+            </div>
+            <!-- End Left Blog-->
+            <!-- Start Right Blog-->
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="single-blog">
+                <div class="single-blog-img">
+                  <a href="blog.html">
+                    <img src={% static "libs/assets/img/blog/3.jpg" %} alt="">
+                  </a>
+                </div>
+                <div class="blog-meta">
+                  <span class="comments-type">
+                    <i class="fa fa-comment-o"></i>
+                    <a href="#">54 comments</a>
+                  </span>
+                  <span class="date-type">
+                    <i class="fa fa-calendar"></i>2024-06-03 / 16:20:55
+                  </span>
+                </div>
+                <div class="blog-text">
+                  <h4>
+                    <a href="blog.html">{% trans "Makarov Airlines Elevates Safety; Media Clamor Dismissed" %}</a>
+                  </h4>
+                  <p>
+                    {% trans "Amidst sensationalist media claims, Makarov Airlines proudly advances our fleet modernization. This shift not only debunks myths but also propels our unwavering commitment to leading-edge safety and passenger comfort." %}
+                  </p>
+                </div>
+                <span>
+                  <a href="blog.html" class="ready-btn">{% trans "Read more" %}</a>
+                </span>
+              </div>
+            </div>
+            <!-- End Right Blog-->
+          </div>
+        </div>
+      </div>
+    </div><!-- End Blog Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <div id="contact" class="contact-area about-area">
+      <div class="contact-inner area-padding">
+        <div class="contact-overly"></div>
+        <div class="container ">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="section-headline text-center">
+                <h2>{% trans "Contact us" %}</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Start contact icon column -->
+            <div class="col-md-4">
+              <div class="contact-icon text-center">
+                <div class="single-icon">
+                  <i class="bi bi-phone"></i>
+                  <p>
+                    Call: +7 495 578-65-65<br>
+                    <span>Monday-Friday (9am-5pm)</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Start contact icon column -->
+            <div class="col-md-4">
+              <div class="contact-icon text-center">
+                <div class="single-icon">
+                  <i class="bi bi-envelope"></i>
+                  <p>
+                    Email: makarov-contact@makarov-airlines.com<br>
+                    <span>Web: www.makarov-airlines.com</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Start contact icon column -->
+            <div class="col-md-4">
+              <div class="contact-icon text-center">
+                <div class="single-icon">
+                  <i class="bi bi-geo-alt"></i>
+                  <p>
+                    Khimki, Moscow Oblast<br>
+                    <span>MW 141400, RU</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+            <!-- Start Google Map -->
+            <div class="col-md-6">
+              <!-- Start Map -->
+              <iframe
+                src="https://www.google.com/maps?q=55.97375,37.41250&hl=en&z=11&amp;output=embed"
+                width="100%"
+                height="380"
+                frameborder="0"
+                style="border:0"
+                allowfullscreen="">
+              </iframe>
+            <!-- End Map -->
+            </div>
+            <!-- End Google Map -->
+
+            <!-- Start contact -->
+            <div class="col-md-6">
+              <div class="form contact-form">
+                <form action="#" method="post" role="form" class="php-email-form">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                  </div>
+                  <div class="form-group mt-3">
+                    <label for="email">Your Email</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                  </div>
+                  <div class="form-group mt-3">
+                    <label for="subject">Subject</label>
+                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                  </div>
+                  <div class="form-group mt-3">
+                    <label for="message">Message</label>
+                    <textarea id="message" class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                  </div>
+                  <div class="my-3">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your message has been sent. Thank you!</div>
+                  </div>
+                  <div class="text-center"><button type="submit" id="contact-form-submit-button">Send Message</button></div>
+                </form>
+              </div>
+            </div>
+            <!-- End Left contact -->
+          </div>
+        </div>
+      </div>
+    </div><!-- End Contact Section -->
+  </main><!-- End #main -->
+
+  <!-- ======= Modal Section ======= -->
+  <div class="modal fade" id="contactFormModal" tabindex="-1" aria-labelledby="contactFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactFormModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modalBody">
+
+        </div>
+        <div class="modal-footer">
+          <button id="modalButton" type="button" class="btn btn-info" data-bs-dismiss="modal"></button>
+        </div>
+      </div>
+    </div>
+  </div><!-- End  Modal Section -->
+
+  <button type="button" id="hiddenModalButton"  data-bs-toggle="modal" data-bs-target="#contactFormModal" style="display: none;">
+  </button>
+
+  <script src={% static "libs/assets/js/contact-form-handle.js" %}></script>
+
+{% endblock content%}
+
