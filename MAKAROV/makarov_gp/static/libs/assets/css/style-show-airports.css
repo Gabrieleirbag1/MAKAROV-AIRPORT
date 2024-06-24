@@ -1,0 +1,51 @@
+footer{
+    z-index: 2;
+    background: white;
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 100%;
+}
+
+.aiport-card{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    padding: 1em 1em 1em 1em;
+    margin: 1em auto 1em auto;
+
+    background: #f3f3f3;
+    border: 2px solid gray;
+    border-radius: 10px;
+
+
+
+    max-width: 30%;
+}
+
+.aiport-card span{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.span-1{
+    justify-content: flex-start;
+}
+
+.span-1 > p {
+    margin-right: 1.5em;
+}
+
+.span-2{
+    justify-content: space-evenly;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;  
+}

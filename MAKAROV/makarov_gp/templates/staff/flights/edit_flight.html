@@ -1,0 +1,98 @@
+{% extends "staff/general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - FLIGHT EDIT</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-add-flight.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+    <main class="w-40 mx-auto rounded shadow border">
+        <form method="POST" id="flight_screen" style="margin: auto; display: flex; flex-direction: column; flex-wrap: nowrap;">
+            {% csrf_token %}
+            <h2 class="mt-4 text-center">Modify a flight</h2>
+
+            <div class="row mt-2">
+                <div class="input-containers col-6">
+                    <label class="form-label">Departure : </label>
+                    <select class="form-select" id="departure-input" name="departure" required>
+                        {% for airport in airports %}
+                            <option value="{{ airport.id }}" {% if airport.id == flight.aeroport_depart_ref %}selected{% endif %}>{{ airport.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="input-containers col-6">
+                    <label class="form-label">Arrival : </label>
+                    <select class="form-select" id="arrival-input" name="arrival" required>
+                        {% for airport in airports %}
+                            <option value="{{ airport.id }}" {% if airport.id == flight.aeroport_arrivee_ref %}selected{% endif %}>{{ airport.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="input-containers col-6">
+                    <label class="form-label">{{ form.date_depart.label }} :</label>
+                    {{ form.date_depart }}
+                </div>
+                <div class="input-containers col-6">
+                    <label class="form-label">{{ form.date_arrivee.label }} :</label>
+                    {{ form.date_arrivee }}
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="input-containers col-6">
+                    <label class="form-label">{{ form.heure_depart.label }} :</label>
+                    {{ form.heure_depart }}
+                </div>
+                <div class="input-containers col-6">
+                    <label class="form-label">{{ form.heure_arrivee.label }} :</label>
+                    {{ form.heure_arrivee }}
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="input-containers col-4">
+                    <label class="form-label">{{ form.prix.label }} :</label>
+                    {{ form.prix }}
+                </div>
+                <div class="input-containers col-4">
+                    <label class="form-label">Class : </label>
+                    <select class="form-select" id="type" name="type" required>
+                        <option value="E" {% if flight.type == "E" %}selected{% endif %}>Economy</option>
+                        <option value="B" {% if flight.type == "B" %}selected{% endif %}>Business</option>
+                        <option value="F" {% if flight.type == "F" %}selected{% endif %}>First Class</option>
+                    </select>
+                </div>
+                <div class="input-containers col-4">
+                    <label class="form-label">Plane : </label>
+                    <select class="form-select" id="plane" name="plane" required>
+                        {% for plane in planes %}
+                            <option value="{{ plane.modele }}" {% if plane.modele == flight.avion_ref %}selected{% endif %} >{{ plane.marque }} - {{ plane.modele }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-info mt-4 mb-3 mx-auto px-5">Send</button>
+            <a class="text-center" href={% url "makarov_gp:home_staff" %}>Return to the homepage</a>
+        </form>
+    </main>
+
+  {% if message %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endif %}
+
+
+{% endblock content%}

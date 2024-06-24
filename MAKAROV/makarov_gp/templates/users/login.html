@@ -1,0 +1,55 @@
+{% extends "general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - LOGIN</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-login.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+
+<!--This here element can be used to prevent stuff going behind the header/nav section.-->
+<div id="empty-div" style="min-height: 80px;"></div>
+
+<main class="w-40 mx-auto rounded shadow border">
+    <form method="POST" id="login_screen" class="" style="margin: auto; display: flex; flex-direction: column; flex-wrap: nowrap;">
+        {% csrf_token %}
+        <h2 class="mt-4 text-center">Log-in to your account</h2>
+        <div class="mt-5 w-50 mx-auto input-containers">
+            <label class="form-label">{{ form.username.label }} :</label>
+            {{ form.username }}
+        </div>
+
+        <div class="w-50 mx-auto input-containers">
+            <label class="form-label mt-2">{{ form.password.label }} :</label>
+            {{ form.password }}
+        </div>
+
+        <button type="submit" class="btn btn-info mt-4 mx-auto px-5">Login</button>
+        <p class="text-center mt-2">Don't have an account ? <a href={% url "makarov_gp:register" %}>Register</a></p>
+        <a class="text-center" href={% url "makarov_gp:home" %}>Return to the homepage</a>
+    </form>
+
+    {% if form.errors %}
+    <ul class="alert alert-danger w-50 mx-auto mt-5">
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+    {% endif %}
+</main>
+
+{% endblock content%}

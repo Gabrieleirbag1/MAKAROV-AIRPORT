@@ -1,0 +1,52 @@
+{% extends "staff/general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - USER</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/user_detail.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  <main>
+    <h4>User N°{{ user.id }}</h4>
+    <div class="row">
+        <div class="info-container col-12">
+            <p><strong>Username :</strong> {{ user.username }}</p>
+        </div>
+    <div>
+    <div class="row">
+        <div class="info-container col-12">
+            <p><strong>Email :</strong> {{ user.email }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="fn-container col-6">
+            <p><strong>First Name :</strong> {{ user.first_name }}</p>
+        </div>
+        <div class="fn-container col-6">
+            <p><strong>Last Name :</strong> {{ user.last_name }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="info-container col-12">
+            <p><strong>Is Staff :</strong> {% if user.is_superuser == True %}YES {% else %} NO{% endif %}</p>
+        </div>
+    </div>
+  </main>
+    
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  {% if message %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endif %}
+
+
+{% endblock content%}

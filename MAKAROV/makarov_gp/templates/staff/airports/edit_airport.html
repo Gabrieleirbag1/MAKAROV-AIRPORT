@@ -1,0 +1,47 @@
+{% extends "staff/general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - AIRPORT EDIT</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-add-airport.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+    <main class="w-40 mx-auto rounded shadow border">
+        <form method="POST" id="airport_screen" style="margin: auto; display: flex; flex-direction: column; flex-wrap: nowrap;">
+            {% csrf_token %}
+            <h2 class="mt-4 text-center">Edit this airport</h2>
+            <div class="mt-5 w-50 mx-auto input-containers">
+                <label class="form-label">{{ form.nom.label }} :</label>
+                {{ form.nom }}
+            </div>
+    
+            <div class="w-50 mx-auto input-containers">
+                <label class="form-label mt-2">{{ form.code_pays.label }} :</label>
+                {{ form.code_pays }}
+            </div>
+
+            <div class="w-50 mx-auto input-containers">
+                <label class="form-label mt-2">{{ form.fuseau.label }} :</label>
+                {{ form.fuseau }}
+            </div>
+
+            <button type="submit" class="btn btn-info mt-4 mb-3 mx-auto px-5">Modify</button>
+            <a class="text-center" href={% url "makarov_gp:home_staff" %}>Return to the homepage</a>
+        </form>
+    </main>
+
+  {% if message %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endif %}
+
+
+{% endblock content%}

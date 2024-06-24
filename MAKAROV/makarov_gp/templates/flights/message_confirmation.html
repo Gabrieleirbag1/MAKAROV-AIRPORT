@@ -1,0 +1,22 @@
+{% extends "general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - FLIGHTS</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-confirmation.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+
+    <div id="empty-div" style="min-height: 80px;"></div>
+
+    <h4 class="{{ alert_style }}"> {{ message }} </h4>
+
+    <a href={% url "makarov_gp:home" %}><button class="btn btn-info">Back to homepage</button></a>
+
+{% endblock content%}
+

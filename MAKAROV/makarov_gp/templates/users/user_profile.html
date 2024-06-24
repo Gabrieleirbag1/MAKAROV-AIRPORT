@@ -1,0 +1,124 @@
+{% extends "staff/general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - PROFILE</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-profile.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+
+    <div id="empty-div" style="min-height: 80px;"></div>
+
+    <main class="w-50 mx-auto mt-5 rounded shadow border">
+        <form method="POST" id="login_screen" class="p-5" style="margin: auto; display: flex; flex-direction: column; flex-wrap: nowrap;">
+            {% csrf_token %}
+            <h2 class="mb-2 text-center">Profile Information</h2>
+            <hr class="custom-hr mb-5">
+
+            <div class="row w-50 mx-auto mb-3">
+                <div class="input-containers col-12">
+                    <label class="form-label">{{ form.username.label }}</label>
+                    {{ form.username }}
+                </div>
+            </div>
+    
+            <div class="row w-50 mx-auto mb-3">
+                <div class="input-containers col-12">
+                    <label class="form-label">{{ form.first_name.label }}</label>
+                    {{ form.first_name }}
+                </div>
+            </div>
+
+            <div class="row w-50 mx-auto mb-3">
+                <div class="input-containers col-12">
+                    <label class="form-label">{{ form.last_name.label }}</label>
+                    {{ form.last_name }}
+                </div>
+            </div>
+    
+            <div class="row w-50 mx-auto mb-3">
+                <div class="input-containers col-12">
+                    <label class="form-label">{{ form.email.label }}</label>
+                    {{ form.email }}
+                </div>
+            </div>
+
+            <button id="modifyButton" class="btn btn-info mt-3 mx-auto px-5">Modify</button>
+            <button id="saveChangesButton" type="submit" class="btn btn-info mt-3 mx-auto px-5" style="display: none;">Save changes</button>
+            <p class="text-center mt-3 mb-2">Want to change your password ? <a href={% url "makarov_gp:home_staff" %}>Click here</a></p>
+            <a class="text-center mt-0" href={% url "makarov_gp:home_staff" %}>Return to the homepage</a>
+        </form>
+    </main>
+
+  <!-- ======= Modal Section ======= -->
+  <div class="modal fade" id="profileFormModal" tabindex="-1" aria-labelledby="profileFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileFormModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modalBody">
+
+        </div>
+        <div class="modal-footer">
+          <button id="modalButton" type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- End  Modal Section -->
+
+    <button type="button" id="hiddenModalButton"  data-bs-toggle="modal" data-bs-target="#profileFormModal" style="display: none;">
+    </button>
+
+    {% if response_status %}
+
+        <script><!--This script handles the modal display for user return statements.-->
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const modalTitle = document.getElementById("profileFormModalLabel");
+                const modalBody = document.getElementById("modalBody");
+
+                modalTitle.innerHTML = "{{ response_status.status }}";
+                modalBody.textContent = "{{ response_status.message }}";
+
+                document.getElementById('hiddenModalButton').click();
+            });
+        </script>
+
+    {% endif %}
+
+    <script><!--This script handles the ability for the user to start modifying the inputs.-->
+        const modifyButton = document.getElementById('modifyButton');
+        const saveChangesButton = document.getElementById('saveChangesButton');
+        const usernameInput = document.getElementById('id_username');
+        const firstNameInput = document.getElementById('id_first_name');
+        const lastNameInput = document.getElementById('id_last_name');
+        const emailInput = document.getElementById('id_email');
+
+        usernameInput.disabled = true;
+        firstNameInput.disabled = true;
+        lastNameInput.disabled = true;
+        emailInput.disabled = true;
+
+        modifyButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            modifyButton.style.display = "none";
+            saveChangesButton.style.display = "block";
+            usernameInput.disabled = false;
+            usernameInput.classList.remove('disabled');
+            firstNameInput.disabled = false;
+            firstNameInput.classList.remove('disabled');
+            lastNameInput.disabled = false;
+            lastNameInput.classList.remove('disabled');
+            emailInput.disabled = false;
+            emailInput.classList.remove('disabled');
+        });
+    </script>
+
+{% endblock content %}

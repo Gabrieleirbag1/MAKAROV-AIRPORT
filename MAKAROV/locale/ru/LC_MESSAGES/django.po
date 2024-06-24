@@ -1,0 +1,511 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-24 14:44+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: makarov_gp/templates/flights/flight_list.html:25
+#: makarov_gp/templates/general/index.html:28
+msgid "Trip"
+msgstr ""
+
+#: makarov_gp/templates/flights/flight_list.html:27
+#: makarov_gp/templates/flights/flight_list.html:40
+#: makarov_gp/templates/flights/flight_list.html:54
+#: makarov_gp/templates/flights/flight_list.html:107
+#: makarov_gp/templates/general/index.html:30
+#: makarov_gp/templates/general/index.html:43
+#: makarov_gp/templates/general/index.html:57
+#: makarov_gp/templates/general/index.html:110
+#: makarov_gp/templates/staff/flights/add_flight.html:25
+#: makarov_gp/templates/staff/flights/add_flight.html:35
+#: makarov_gp/templates/staff/flights/add_flight.html:73
+#: makarov_gp/templates/staff/flights/add_flight.html:82
+#: makarov_gp/templates/staff/register.html:53
+msgid "Choose..."
+msgstr "Выбирать..."
+
+#: makarov_gp/templates/flights/flight_list.html:28
+#: makarov_gp/templates/general/index.html:31
+msgid "Round-Trip"
+msgstr "Поездка туда и обратно"
+
+#: makarov_gp/templates/flights/flight_list.html:29
+#: makarov_gp/templates/general/index.html:32
+msgid "One-way ticket"
+msgstr "Билет в одну сторону"
+
+#: makarov_gp/templates/flights/flight_list.html:32
+#: makarov_gp/templates/flights/flight_list.html:46
+#: makarov_gp/templates/flights/flight_list.html:60
+#: makarov_gp/templates/general/index.html:35
+#: makarov_gp/templates/general/index.html:49
+#: makarov_gp/templates/general/index.html:63
+msgid "Please select a valid option."
+msgstr "Пожалуйста, выберите действительный вариант."
+
+#: makarov_gp/templates/flights/flight_list.html:38
+#: makarov_gp/templates/general/index.html:41
+msgid "Departure"
+msgstr "Отправление"
+
+#: makarov_gp/templates/flights/flight_list.html:52
+#: makarov_gp/templates/general/index.html:55
+msgid "Arrival"
+msgstr "Прибытие"
+
+#: makarov_gp/templates/flights/flight_list.html:66
+#: makarov_gp/templates/general/index.html:69
+msgid "Date"
+msgstr "Дата"
+
+#: makarov_gp/templates/flights/flight_list.html:69
+#: makarov_gp/templates/general/index.html:72
+msgid "Please select a date."
+msgstr "Пожалуйста, выберите дату."
+
+#: makarov_gp/templates/flights/flight_list.html:75
+#: makarov_gp/templates/general/index.html:78
+msgid "Adults"
+msgstr "Взрослые"
+
+#: makarov_gp/templates/flights/flight_list.html:90
+#: makarov_gp/templates/general/index.html:93
+msgid "Kids"
+msgstr "Дети"
+
+#: makarov_gp/templates/flights/flight_list.html:105
+#: makarov_gp/templates/general/index.html:108
+msgid "Class"
+msgstr "Сорт"
+
+#: makarov_gp/templates/flights/flight_list.html:108
+#: makarov_gp/templates/general/index.html:111
+msgid "Economy"
+msgstr "Экономика"
+
+#: makarov_gp/templates/flights/flight_list.html:109
+#: makarov_gp/templates/general/index.html:112
+msgid "Business"
+msgstr "Бизнес"
+
+#: makarov_gp/templates/flights/flight_list.html:110
+#: makarov_gp/templates/general/index.html:113
+msgid "First Class"
+msgstr "Первый класс"
+
+#: makarov_gp/templates/flights/flight_list.html:113
+#: makarov_gp/templates/general/index.html:116
+msgid "Please select a travel class."
+msgstr "Пожалуйста, выберите класс путешествия."
+
+#: makarov_gp/templates/flights/flight_list.html:118
+#: makarov_gp/templates/general/index.html:121
+msgid "Search for a flight"
+msgstr "Искать рейс"
+
+#: makarov_gp/templates/general/UI/header.html:13
+#: makarov_gp/templates/staff/general/UI/header.html:13
+msgid "Home"
+msgstr "Дом"
+
+#: makarov_gp/templates/general/UI/header.html:14
+msgid "About"
+msgstr "О"
+
+#: makarov_gp/templates/general/UI/header.html:15
+msgid "Services"
+msgstr "Услуги"
+
+#: makarov_gp/templates/general/UI/header.html:17
+msgid "Team"
+msgstr "Команда"
+
+#: makarov_gp/templates/general/UI/header.html:18
+#: makarov_gp/templates/staff/general/UI/header.html:14
+msgid "Flights"
+msgstr "Рейсы"
+
+#: makarov_gp/templates/general/UI/header.html:20
+msgid "Browse Flights"
+msgstr "Обзор рейсов"
+
+#: makarov_gp/templates/general/UI/header.html:22
+msgid "My Flights"
+msgstr "Мои рейсы"
+
+#: makarov_gp/templates/general/UI/header.html:26
+msgid "Contact"
+msgstr "Контакт"
+
+#: makarov_gp/templates/general/UI/header.html:28
+#: makarov_gp/templates/staff/general/UI/header.html:29
+msgid "Profile"
+msgstr "Профиль"
+
+#: makarov_gp/templates/general/UI/header.html:29
+#: makarov_gp/templates/staff/general/UI/header.html:30
+msgid "Logout"
+msgstr "Выйти"
+
+#: makarov_gp/templates/general/UI/header.html:31
+#: makarov_gp/templates/staff/general/UI/header.html:32
+msgid "Login"
+msgstr "Авторизоваться"
+
+#: makarov_gp/templates/general/UI/header.html:32
+#: makarov_gp/templates/staff/general/UI/header.html:33
+msgid "Register"
+msgstr "регистр"
+
+#: makarov_gp/templates/general/index.html:132
+msgid "Experience the Sky Like Never Before"
+msgstr "Почувствуйте небо, как никогда раньше"
+
+#: makarov_gp/templates/general/index.html:133
+msgid ""
+"Makarov Airlines - Where Every Journey is as Memorable as the Destination."
+msgstr ""
+"«Авиалинии Макарова» — где каждое путешествие запоминается так же, как и пункт назначения."
+
+#: makarov_gp/templates/general/index.html:134
+#: makarov_gp/templates/general/index.html:144
+msgid "Get Started"
+msgstr "Начать"
+
+#: makarov_gp/templates/general/index.html:142
+msgid "Fly Beyond Borders"
+msgstr "Летайте за пределы границ"
+
+#: makarov_gp/templates/general/index.html:143
+msgid "With us, you don't have to worry about feeling restrained, just leave !"
+msgstr "С нами вам не придется беспокоиться о том, что вы почувствуете себя сдержанным, просто уходите!"
+
+#: makarov_gp/templates/general/index.html:190
+#: makarov_gp/templates/general/index.html:289
+msgid "Flight Operations"
+msgstr "Полеты"
+
+#: makarov_gp/templates/general/index.html:193
+msgid ""
+"Makarov Airlines ensures efficient management and operation of flights, with "
+"a steadfast commitment to safety and customer satisfaction. Our dedicated "
+"team expertly handles complex logistics, providing superior air travel "
+"experiences that meet the highest industry standards."
+msgstr ""
+"Авиакомпания Макарова обеспечивает эффективное управление и выполнение рейсов, при этом"
+"твердая приверженность безопасности и удовлетворенности клиентов. Наш преданный"
+"команда умело справляется со сложной логистикой, обеспечивая превосходное качество авиаперевозок"
+"опыт, соответствующий самым высоким отраслевым стандартам."
+
+#: makarov_gp/templates/general/index.html:197
+msgid "Cabin Comfort Design"
+msgstr "Комфортный дизайн салона"
+
+#: makarov_gp/templates/general/index.html:200
+msgid "Aircraft Maintenance"
+msgstr "Техническое обслуживание самолетов"
+
+#: makarov_gp/templates/general/index.html:203
+msgid "In-flight Service Enhancement"
+msgstr "Улучшение обслуживания на борту"
+
+#: makarov_gp/templates/general/index.html:206
+msgid "Airport Lounge Services"
+msgstr "Услуги зала ожидания в аэропорту"
+
+#: makarov_gp/templates/general/index.html:209
+msgid "Aviation Safety Compliance"
+msgstr "Соблюдение требований авиационной безопасности"
+
+#: makarov_gp/templates/general/index.html:226
+msgid "Our Services"
+msgstr "Наши услуги"
+
+#: makarov_gp/templates/general/index.html:239
+msgid "Customer Service"
+msgstr "Обслуживание клиентов"
+
+#: makarov_gp/templates/general/index.html:241
+msgid ""
+"Dedicated to providing top-notch service, from booking to landing, ensuring "
+"a seamless and pleasant journey for every traveler."
+msgstr ""
+"Мы стремимся предоставить первоклассный сервис, от бронирования до посадки, обеспечивая беспрепятственное и приятное путешествие для каждого путешественника."
+
+#: makarov_gp/templates/general/index.html:255
+msgid "Safety Protocols"
+msgstr "Протоколы безопасности"
+
+#: makarov_gp/templates/general/index.html:257
+msgid "Implementing"
+msgstr "Реализация"
+
+#: makarov_gp/templates/general/index.html:257
+msgid "rigorous"
+msgstr "тщательный"
+
+#: makarov_gp/templates/general/index.html:257
+msgid ""
+"safety measures and continuous staff training to maintain our commitment to "
+"passenger"
+msgstr ""
+"меры безопасности и постоянное обучение персонала для поддержания нашей приверженности"
+"пассажир"
+
+#: makarov_gp/templates/general/index.html:257
+msgid "safety"
+msgstr "безопасность"
+
+#: makarov_gp/templates/general/index.html:257
+msgid "at all times"
+msgstr "во все времена"
+
+#: makarov_gp/templates/general/index.html:272
+msgid "Cabin Design"
+msgstr "Дизайн кабины"
+
+#: makarov_gp/templates/general/index.html:274
+msgid ""
+"Focused on enhancing passenger comfort and convenience by integrating state-"
+"of-the-art design and technology in our aircraft cabins."
+msgstr ""
+"Мы ориентированы на повышение комфорта и удобства пассажиров за счет внедрения современного дизайна и технологий в салоны наших самолетов."
+
+#: makarov_gp/templates/general/index.html:291
+msgid ""
+"Ensuring optimal flight schedules and routes to provide timely and efficient "
+"travel experiences for all passengers."
+msgstr ""
+"Обеспечение оптимальных расписаний и маршрутов рейсов для обеспечения своевременного и эффективного путешествия для всех пассажиров."
+
+#: makarov_gp/templates/general/index.html:307
+msgid "In-flight Entertainment"
+msgstr "Развлечения на борту"
+
+#: makarov_gp/templates/general/index.html:309
+msgid ""
+"Offering a wide range of entertainment options to keep passengers engaged "
+"and comfortable throughout their flight."
+msgstr ""
+"Предлагает широкий выбор развлечений, чтобы пассажиры были заняты и чувствовали себя комфортно на протяжении всего полета."
+
+#: makarov_gp/templates/general/index.html:325
+msgid "24/7 Customer Support"
+msgstr "Круглосуточная поддержка клиентов, 7 дней в неделю"
+
+#: makarov_gp/templates/general/index.html:327
+msgid ""
+"Available around the clock to assist with bookings, flight changes, and to "
+"address any inquiries or concerns our passengers may have."
+msgstr ""
+"Доступен круглосуточно, чтобы помочь с бронированием, изменением рейса, а также ответить на любые вопросы или проблемы, которые могут возникнуть у наших пассажиров."
+
+#: makarov_gp/templates/general/index.html:344
+msgid "Our special Team"
+msgstr "Наша специальная команда"
+
+#: makarov_gp/templates/general/index.html:377
+msgid "PR Crisis Manager"
+msgstr "PR-кризисный менеджер"
+
+#: makarov_gp/templates/general/index.html:410
+msgid "Chief Aviation Officer"
+msgstr "Главный авиационный офицер"
+
+#: makarov_gp/templates/general/index.html:443
+msgid "Chief Executive Officer and Founder"
+msgstr "Главный исполнительный директор и основатель"
+
+#: makarov_gp/templates/general/index.html:476
+msgid "Chief Financial Officer"
+msgstr "Главный финансовый директор"
+
+#: makarov_gp/templates/general/index.html:493
+msgid "Working for a better transport, together."
+msgstr "Вместе работаем над улучшением транспорта."
+
+#: makarov_gp/templates/general/index.html:494
+msgid "Ideas, feedbacks, we can't wait to hear what you have to say about us !"
+msgstr "Идеи, отзывы, нам не терпится услышать, что вы скажете о нас!"
+
+#: makarov_gp/templates/general/index.html:495
+#: makarov_gp/templates/general/index.html:945
+msgid "Contact us"
+msgstr "Связаться с нами"
+
+#: makarov_gp/templates/general/index.html:507
+msgid "Our Fleet"
+msgstr "Наш флот"
+
+#: makarov_gp/templates/general/index.html:515
+msgid "All"
+msgstr "Все"
+
+#: makarov_gp/templates/general/index.html:516
+msgid "Narrow-body"
+msgstr "Узкое тело"
+
+#: makarov_gp/templates/general/index.html:517
+msgid "Wide-body"
+msgstr "Широкое тело"
+
+#: makarov_gp/templates/general/index.html:518
+msgid "Very Large Aircraft"
+msgstr "Очень Большой Самолет"
+
+#: makarov_gp/templates/general/index.html:756
+msgid "Flight Attendant"
+msgstr "Бортпроводник"
+
+#: makarov_gp/templates/general/index.html:759
+msgid ""
+"Working at our airline has truly been a journey of personal and professional "
+"growth. Every day, I have the privilege of meeting people from all walks of "
+"life and ensuring their comfort and safety on their travels. It's a "
+"rewarding experience when passengers disembark with a smile, thanking us for "
+"a pleasant flight."
+msgstr ""
+"Работа в нашей авиакомпании – это действительно путь личностного и профессионального роста. Каждый день мне выпадает честь встречаться с людьми из всех слоев общества и обеспечивать их комфорт и безопасность во время путешествий. Приятно, когда пассажиры выходят из самолета с улыбкой и благодарят нас за приятный полет."
+
+#: makarov_gp/templates/general/index.html:769
+msgid "Customer Service Agent"
+msgstr "Агент по обслуживанию клиентов"
+
+#: makarov_gp/templates/general/index.html:772
+msgid ""
+"I love the dynamic environment of working at the airport. Each day brings "
+"new challenges and learning opportunities. Our team is like a family; we "
+"support each other in providing the best service to our customers, helping "
+"to resolve their issues and ensuring they have a smooth journey from check-"
+"in to boarding."
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:782
+msgid "Aircraft Maintenance Technician"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:785
+msgid ""
+"There's a profound sense of responsibility in maintaining the safety and "
+"readiness of aircraft. It's not just about the technical skills, which are "
+"critical, but also about maintaining a mindset of continual improvement and "
+"adherence to safety protocols. Our work behind the scenes is key to the "
+"airline's success and passenger safety."
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:795
+msgid "Baggage Handler"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:798
+msgid ""
+"My role at the airline is physically demanding but extremely vital. Ensuring "
+"that every passenger's luggage is handled properly and makes it on the right "
+"flight is a challenge I take seriously. It's satisfying to see operations "
+"run smoothly because of our efficiency and hard work on the ground."
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:808
+msgid "In-flight Catering Coordinator"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:811
+msgid ""
+"Being part of the in-flight catering team allows me to contribute to the "
+"overall travel experience of our passengers. From selecting menu items to "
+"ensuring meals are prepared and delivered on time, our goal is to enhance "
+"the flying experience with quality and taste, making every meal aloft "
+"memorable."
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:832
+msgid "Latest News"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:856
+msgid "Makarov Airlines Enhances Efficiency with Team Restructuring"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:859
+msgid ""
+"Makarov Airlines today announced a workforce optimization strategy to "
+"elevate operational efficiency and enhance service quality. This decisive "
+"move positions us for sustainable growth and continued competitive pricing."
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:863
+#: makarov_gp/templates/general/index.html:895
+#: makarov_gp/templates/general/index.html:927
+msgid "Read more"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:888
+msgid "Innovative Safety Enhancements Underway at Makarov Airlines"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:891
+msgid ""
+"In our quest for cutting-edge aviation solutions, some flights are testing "
+"new, non-critical component designs that"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:891
+msgid "will not fall-off"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:891
+msgid ""
+"this time. These innovations are key to advancing our commitment to safety "
+"and operational excellence."
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:920
+msgid "Makarov Airlines Elevates Safety; Media Clamor Dismissed"
+msgstr ""
+
+#: makarov_gp/templates/general/index.html:923
+msgid ""
+"Amidst sensationalist media claims, Makarov Airlines proudly advances our "
+"fleet modernization. This shift not only debunks myths but also propels our "
+"unwavering commitment to leading-edge safety and passenger comfort."
+msgstr ""
+
+#: makarov_gp/templates/staff/general/UI/header.html:16
+msgid "Show flights"
+msgstr ""
+
+#: makarov_gp/templates/staff/general/UI/header.html:17
+msgid "Add flight"
+msgstr ""
+
+#: makarov_gp/templates/staff/general/UI/header.html:21
+msgid "Airports"
+msgstr ""
+
+#: makarov_gp/templates/staff/general/UI/header.html:23
+msgid "Show airports"
+msgstr ""
+
+#: makarov_gp/templates/staff/general/UI/header.html:24
+msgid "Add Airport"
+msgstr ""
+
+#: makarov_gp/templates/staff/general/UI/header.html:27
+msgid "Cancel demands"
+msgstr ""

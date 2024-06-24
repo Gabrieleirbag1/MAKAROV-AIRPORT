@@ -1,0 +1,84 @@
+{% extends "general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - REGISTER</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-register.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+
+<!--This here element can be used to prevent stuff going behind the header/nav section.-->
+<div id="empty-div" style="min-height: 80px;"></div>
+
+<main class="w-50 mx-auto mt-5 rounded shadow border">
+    <form method="POST" id="login_screen" class="p-5" style="margin: auto; display: flex; flex-direction: column; flex-wrap: nowrap;">
+        {% csrf_token %}
+        <h2 class="mb-2 text-center">Create your account</h2>
+        <hr class="custom-hr mb-5">
+        <div class="row">
+            <div class="input-containers col-6">
+                <label class="form-label">{{ form.first_name.label }} :</label>
+                {{ form.first_name }}
+            </div>
+
+            <div class="input-containers col-6">
+                <label class="form-label">{{ form.last_name.label }} :</label>
+                {{ form.last_name }}
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="input-containers col-12">
+                <label class="form-label">{{ form.username.label }} :</label>
+                {{ form.username }}
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="input-containers col-12">
+                <label class="form-label">{{ form.email.label }} :</label>
+                {{ form.email }}
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="input-containers col-6">
+                <label class="form-label">{{ form.password.label }} :</label>
+                {{ form.password }}
+            </div>
+
+            <div class="input-containers col-6">
+                <label class="form-label">{{ form.password2.label }} :</label>
+                {{ form.password2 }}
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-info mt-5 mx-auto px-5">Register</button>
+        <p class="text-center mt-3 mb-2">Already have an account ? <a href={% url "makarov_gp:login" %}>Login</a></p>
+        <a class="text-center mt-0" href={% url "makarov_gp:home" %}>Return to the homepage</a>
+    </form>
+
+    {% if form.errors %}
+    <ul class="alert alert-danger w-50 mx-auto mt-5">
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+    {% endif %}
+</main>
+
+{% endblock content%}

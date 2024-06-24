@@ -1,0 +1,58 @@
+{% extends "general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - MY FLIGHTS</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-user-flight-list.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+
+<div id="empty-div" style="min-height: 80px;"></div>
+
+{% for reservation in c_reservations %}
+
+    {% if reservation.annulation != True %}
+
+        <main class="cadres w-40 mx-auto rounded shadow border">
+            
+            <div class="row bigger-text"><p>FROM</p></div>
+            <div class="line-cadre">
+                <p>{{ reservation.aeroport_depart_nom }}</p>
+                <span class="sub-span">
+                    <p>{{ reservation.date_depart }}</p>
+                    <p>{{ reservation.heure_depart }}</p>
+                </span>
+            </div>
+            <hr class="custom-hr">
+            <div class="row bigger-text"><p>TO</p></div>
+            <div class="line-cadre">
+                <p>{{ reservation.aeroport_arrivee_nom }}</p>
+                <span class="sub-span">
+                    <p>{{ reservation.date_arrivee }}</p>
+                    <p>{{ reservation.heure_arrivee }}</p>
+                </span>
+            </div>
+            <div class="line-cadre">
+                <p>Class : {{ reservation.type }}</p>
+                {% if reservation.demande == False %}
+                    <a href={% url "makarov_gp:cancel_resa" flight_id=reservation.vol_ref %}><button class="btn btn-warning">Cancel this flight</button></a>
+                {% else %}
+                    <p><strong>Waiting Staff Approvement.</strong></p>
+                {% endif %}
+
+                
+            </div>
+        </main>
+
+    {% endif %}
+
+{% endfor %}
+
+<div style="min-height: 5em;"></div>
+
+{% endblock content%}

@@ -1,0 +1,45 @@
+{% extends "general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - FLIGHT</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-flight-detail.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+<div id="empty-div" style="min-height: 80px;"></div>
+
+<main class="w-40 mx-auto rounded shadow border">
+    <h3 class="mt-4 text-center">Flight N°{{ flight.numvol }}</h3>
+
+    <div class="sub-div">
+        <h4>From : </h4>
+        <p>{{ flight.aeroport_depart_nom }}</p>
+        <span class="date-time-sub-span">
+            <p>{{ flight.date_depart }}</p>
+            <p class="time-p">{{ flight.heure_depart }}</p>
+        </span>
+    </div>
+
+    <div class="sub-div">
+        <h4>To : </h4>
+        <p>{{ flight.aeroport_arrivee_nom }}</p>
+        <span class="date-time-sub-span">
+            <p>{{ flight.date_arrivee }}</p>
+            <p class="time-p">{{ flight.heure_arrivee }}</p>
+        </span>
+    </div>
+    <p>Class : {{ flight.type }}</p>
+
+    <a href={% url "makarov_gp:flights_user" %} class="link-el-cancel">
+        <button class="btn btn-warning mx-auto">See My flights</button>
+    </a>
+</main>
+
+
+
+{% endblock content%}
