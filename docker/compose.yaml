@@ -79,7 +79,7 @@ services:
       - "4222:4222"
     networks:
       my_network:
-        ipv4_address: 172.21.0.10 micro
+        ipv4_address: 172.21.0.10
 ########################
 
 
@@ -91,7 +91,7 @@ services:
     networks:
       my_network:
         ipv4_address: 172.21.0.20
-    command: python3 script1.py
+    command: python3 sub_annulation.py
 
   micro2:
     build:
@@ -100,7 +100,7 @@ services:
     networks:
       my_network:
         ipv4_address: 172.21.0.21
-    command: python3 script2.py
+    command: python3 sub_bancaire.py
 
   micro3:
     build:
@@ -109,12 +109,13 @@ services:
     networks:
       my_network:
         ipv4_address: 172.21.0.22
-    command: python3 script3.py
+    command: python3 sub_dispo.py
 ################################
 
 
 ##### FRONT DJANGO ######
   djangopache:
+    command: /usr/sbin/apache2ctl -D FOREGROUND
     build:
       dockerfile: djangopache-compose/Dockerfile
     ports:
