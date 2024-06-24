@@ -21,12 +21,11 @@ services:
 ###### API REST ########
   web-rest-1:
     build:
-      context: django-compose-user/makarov_users
+      dockerfile: docker-compose-user/makarov_users/Dockerfile
       target: builder
     ports: 
       - '8000:8000'
-      - '81:80'
-      - '444:443'
+      - '80:80'
     networks:
       my_network:
         ipv4_address: 172.21.0.1
@@ -35,12 +34,11 @@ services:
 
   web-rest-2:
     build:
-      context: django-compose-vols/makarov_vols
+      dockerfile: docker-compose-vols/makarov_vols/Dockerfile
       target: builder
     ports:
-      - '8001:8000'
-      - '82:80'
-      - '445:443'
+      - '8000:8000'
+      - '80:80'
     networks:
       my_network:
         ipv4_address: 172.21.0.2
@@ -49,12 +47,11 @@ services:
 
   web-rest-3:
     build:
-      context: django-compose-reservations/makarov_reservations
+      dockerfile: docker-compose-reservations/makarov_reservations/Dockerfile
       target: builder
     ports:
-      - '8001:8000'
-      - '82:80'
-      - '445:443'
+      - '8000:8000'
+      - '80:80'
     networks:
       my_network:
         ipv4_address: 172.21.0.3
@@ -63,12 +60,11 @@ services:
 
   web-rest-4:
     build:
-      context: django-compose-structure/makarov_structure
+      dockerfile: docker-compose-structure/makarov_structure/Dockerfile
       target: builder
     ports:
-      - '8001:8000'
-      - '82:80'
-      - '445:443'
+      - '8000:8000'
+      - '80:80'
     networks:
       my_network:
         ipv4_address: 172.21.0.4
@@ -83,7 +79,7 @@ services:
       - "4222:4222"
     networks:
       my_network:
-        ipv4_address: 172.21.0.10
+        ipv4_address: 172.21.0.10 micro
 ########################
 
 
