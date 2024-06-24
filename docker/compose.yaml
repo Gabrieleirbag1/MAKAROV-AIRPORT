@@ -5,7 +5,7 @@ services:
   db:
     image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD:
+      MYSQL_ROOT_PASSWORD: toto
       MYSQL_DATABASE: makarov_airport
       MYSQL_USER: gab
       MYSQL_PASSWORD: toto
@@ -14,98 +14,32 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - bridge_network
+      my_network:
+        ipv4_address: 172.21.0.5
 ####################
 
 ###### API REST ########
   web-rest-1:
     build:
-      context: django-compose-user/app
+      context: django-compose-user/makarov_users
       target: builder
     ports: 
       - '8000:8000'
       - '81:80'
       - '444:443'
     networks:
-      - bridge_network
-
-  web-rest-2:
-    build:
-      context: django-compose-vols/app
-      target: builder
-    ports:
-      - '8001:8000'
-      - '82:80'
-      - '445:443'
-    networks:
-      - bridge_network
-
-  web-rest-3:
-    build:
-      context: django-compose-reservations/app
-      target: builder
-    ports:
-      - '8002:8000'
-      - '83:80'
-      - '446:443'
-    networks:
-      - bridge_network
-
-  web-rest-4:
-    build:
-      context: django-compose-structure/app
-      target: builder
-    ports:
-      - '8003:8000'
-      - '84:80'
-      - '447:443'
-    networks:
-      - bridge_network
-############################
-
-
-##### NATS CLUSTER #####
-  nats:
-    image: nats
-    ports:
-      - "8222:8222"
-    networks:
-      - bridge_network
-########################
-
-
-##### PYTHON MICROSERVICES #####
-  micro1:
-    build:
-      dockerfile: microservices-compose/Dockerfile
-      target: micropy
-    networks:
-      - bridge_network
-    command: python3 script1.py
-
-  micro2:
-    build:
-      dockerfile: microservices-compose/Dockerfile
-      target: micropy
-    networks:
-      - bridge_network
-    command: python3 script2.py
-
-  micro3:
-    build:
-      dockerfile: microservices-compose/Dockerfile
-      target: micropy
-    networks:
-      - bridge_network
-    command: python3 script3.py
-################################
-
+      my_network:
+        ipv4_address: 172.21.0.4
+    depends_on:
+      - db
 
 networks:
-  bridge_network:
+  my_network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
 
 volumes:
   db-data:
     name: "maria-data"
-

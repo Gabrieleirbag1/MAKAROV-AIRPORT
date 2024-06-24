@@ -5,8 +5,9 @@ WORKDIR /app
 COPY requirements.txt /app
 RUN pip3 install -r requirements.txt --no-cache-dir
 COPY . /app
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
 RUN python3 manage.py makemigrations
-RUN python3 manage.py migrate
-ENTRYPOINT ["python3"]
-CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["sh", "-c"]
+CMD ["/wait-for-it.sh"]
 

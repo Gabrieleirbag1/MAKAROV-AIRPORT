@@ -48,13 +48,14 @@ class UserListApiView(APIView):
             serializer.save()
             self.post_bank_info(request.data.get('username'))
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def post_bank_info(self, username):
         argent = random.randint(800, 3000)
         rib = random.randint(00000000, 99999999)
-        url = 'http://192.168.1.57:8000/users/infos/banque/'
+        url = 'http://192.168.1.101:8000/users/infos/banque/'
         data = {
             'username': username,
             'argent': argent,
@@ -106,9 +107,9 @@ class UserDetailApiView(APIView):
         serializer = InfoUserSerializer(instance=user, data=data, partial=True)
 
         if serializer.is_valid():
-            response = requests.get(f"http://192.168.1.57:8000/users/infos/banque/?username={old_username}")
+            response = requests.get(f"http://192.168.1.101:8000/users/infos/banque/?username={old_username}")
             id = response.json()[0]['id']
-            response = requests.get(f"http://192.168.1.57:8003/structure/infos/staff/?user_ref={old_username}")
+            response = requests.get(f"http://192.168.1.101:8003/structure/infos/staff/?user_ref={old_username}")
             id_staff = response.json()[0]['id']
 
             headers = {'Content-Type': 'application/json'}
@@ -116,12 +117,12 @@ class UserDetailApiView(APIView):
             data = {
                 'username': request.data.get('username', user.username),
             }
-            response = requests.put(f"http://192.168.1.57:8000/users/infos/banque/{id}/", data=json.dumps(data), headers=headers)
+            response = requests.put(f"http://192.168.1.101:8000/users/infos/banque/{id}/", data=json.dumps(data), headers=headers)
             
             data = {
                 'user_ref': request.data.get('username', user.username),
             }
-            response = requests.put(f"http://192.168.1.57:8003/structure/infos/staff/{id_staff}/", data=json.dumps(data), headers=headers)
+            response = requests.put(f"http://192.168.1.101:8003/structure/infos/staff/{id_staff}/", data=json.dumps(data), headers=headers)
 
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -179,7 +180,7 @@ class LoginUserListApiView(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
 
-        infos = requests.get(f"http://192.168.1.57:8000/users/infos/users/?username={username}")
+        infos = requests.get(f"http://192.168.1.101:8000/users/infos/users/?username={username}")
         infos = infos.json()
         try:
             if username == infos[0]['username'] and password == infos[0]['password']:

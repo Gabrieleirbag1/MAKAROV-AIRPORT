@@ -13,10 +13,11 @@ RUN python3 -m venv /var/www/html/django-app/djangovenv && \
 RUN /var/www/html/django-app/djangovenv/bin/python /var/www/html/django-app/manage.py makemigrations && \
     /var/www/html/django-app/djangovenv/bin/python /var/www/html/django-app/manage.py migrate
 
-RUN /var/www/html/django-app/djangovenv/bin/python /var/www/html/django-app/manage.py collectstatic
+RUN /var/www/html/django-app/djangovenv/bin/python /var/www/html/django-app/manage.py collectstatic --noinput --clear
 
 RUN chgrp -R www-data /var/www/html
 RUN a2ensite django-app
-RUN /etc/init.d/apache2 restart
+RUN a2dissite 000-default.conf
+RUN service apache2 start
 
 
