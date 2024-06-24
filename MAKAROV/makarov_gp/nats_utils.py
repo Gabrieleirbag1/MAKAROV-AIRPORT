@@ -23,7 +23,7 @@ class PublishDispo():
 
     async def run_publisher(self):
         """Exécute la publication des informations de disponibilité."""
-        nc = await nats.connect("nats://192.168.1.100:4222")
+        nc = await nats.connect("nats://172.21.0.6:4222")
 
         data = json.dumps({"numvol": self.numvol, "username": self.username, "argent": self.argent})
         try:
@@ -60,7 +60,7 @@ class PublishBank():
 
     async def run_publisher(self):
         """Exécute la publication des informations bancaires."""
-        nc = await nats.connect("nats://192.168.1.100:4222")
+        nc = await nats.connect("nats://172.21.0.6:4222")
 
         data = json.dumps({"numvol": self.numvol, "username": self.username})
         try:
@@ -113,7 +113,7 @@ class PublishAnnulationValidation():
 
     async def run_publisher(self):
         """Exécute la publication des informations de validation d'annulation."""
-        nc = await nats.connect("nats://192.168.1.100:4222")
+        nc = await nats.connect("nats://172.21.0.6:4222")
 
         data = json.dumps({"numvol": self.numvol, "annulation": self.annulation, "username": self.username})
         try:
