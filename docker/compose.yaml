@@ -21,7 +21,7 @@ services:
 ###### API REST ########
   web-rest-1:
     build:
-      dockerfile: docker-compose-user/makarov_users/Dockerfile
+      dockerfile: django-compose-user/makarov_users/Dockerfile
       target: builder
     ports: 
       - '8000:8000'
@@ -34,7 +34,7 @@ services:
 
   web-rest-2:
     build:
-      dockerfile: docker-compose-vols/makarov_vols/Dockerfile
+      dockerfile: django-compose-vols/makarov_vols/Dockerfile
       target: builder
     ports:
       - '8000:8000'
@@ -47,7 +47,7 @@ services:
 
   web-rest-3:
     build:
-      dockerfile: docker-compose-reservations/makarov_reservations/Dockerfile
+      dockerfile: django-compose-reservations/makarov_reservations/Dockerfile
       target: builder
     ports:
       - '8000:8000'
@@ -60,7 +60,7 @@ services:
 
   web-rest-4:
     build:
-      dockerfile: docker-compose-structure/makarov_structure/Dockerfile
+      dockerfile: django-compose-structure/makarov_structure/Dockerfile
       target: builder
     ports:
       - '8000:8000'
