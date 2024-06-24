@@ -5,5 +5,5 @@ WORKDIR /app
 COPY microservices-compose/requirements.txt /app
 RUN ls -l
 RUN pip3 install -r requirements.txt --no-cache-dir
-COPY . /app
+COPY microservices-compose/ /app
 
