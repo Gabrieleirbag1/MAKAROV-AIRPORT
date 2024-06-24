@@ -31,7 +31,7 @@ class PublishBank():
 
     async def run_publisher(self):
         """Exécute la publication des informations bancaires."""
-        nc = await nats.connect("nats://192.168.1.57:4222")
+        nc = await nats.connect("nats://192.168.1.101:4222")
 
         data = json.dumps({"numvol": self.numvol, "username": self.username})
         try:

@@ -30,7 +30,7 @@ class PublishAnnulationValidation():
 
     async def run_publisher(self):
         """Exécute la publication des informations de validation d'annulation."""
-        nc = await nats.connect("nats://192.168.1.57:4222")
+        nc = await nats.connect("nats://192.168.1.101:4222")
 
         data = json.dumps({"numvol": self.numvol, "annulation": self.annulation, "username": self.username})
         try:
