@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate
 import requests, json, random
 from .nats_utils import PublishBank
+from copy import deepcopy
 
 # Create your views here.
 def index(request):
@@ -53,7 +54,7 @@ class UserListApiView(APIView):
     def post_bank_info(self, username):
         argent = random.randint(800, 3000)
         rib = random.randint(00000000, 99999999)
-        url = 'http://192.168.1.101:8000/users/infos/banque/'
+        url = 'http://192.168.1.57:8000/users/infos/banque/'
         data = {
             'username': username,
             'argent': argent,
@@ -93,6 +94,7 @@ class UserDetailApiView(APIView):
         except UserProfile.DoesNotExist:
             return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
 
+        old_username = deepcopy(user.username)
         data = {
             'username': request.data.get('username', user.username),
             'first_name': request.data.get('first_name', user.first_name),
@@ -101,7 +103,67 @@ class UserDetailApiView(APIView):
             'password': request.data.get('password', user.password),
         }
 
-        # response = requests.put(f"http://192.168.100.1:8000")
+        serializer = InfoUserSerializer(instance=user, data=data, partial=True)
+
+        if serializer.is_valid():
+            response = requests.get(f"http://192.168.1.57:8000/users/infos/banque/?username={old_username}")
+            id = response.json()[0]['id']
+            response = requests.get(f"http://192.168.1.57:8003/structure/infos/staff/?user_ref={old_username}")
+            id_staff = response.json()[0]['id']
+
+            headers = {'Content-Type': 'application/json'}
+
+            data = {
+                'username': request.data.get('username', user.username),
+            }
+            response = requests.put(f"http://192.168.1.57:8000/users/infos/banque/{id}/", data=json.dumps(data), headers=headers)
+            
+            data = {
+                'user_ref': request.data.get('username', user.username),
+            }
+            response = requests.put(f"http://192.168.1.57:8003/structure/infos/staff/{id_staff}/", data=json.dumps(data), headers=headers)
+
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+#############################################################""
+class SuperUserApiView(APIView):
+
+    def get(self, request):
+        username = request.query_params.get('username')
+        if username is not None:
+            infosuser= UserProfile.objects.filter(username=username)
+            print(infosuser)
+        else:
+            infosuser= UserProfile.objects.all()
+        serializer = InfoUserSerializer(infosuser, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        return
+
+class SuperUserDetailApiView(APIView):
+
+    def get(self, request, id, *args, **kwargs):
+        users= UserProfile.objects.get(id=id)
+        if not users:
+            return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = InfoUserSerializer(users)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, id, *args, **kwargs):
+        try:
+            user = UserProfile.objects.get(id=id)
+        except UserProfile.DoesNotExist:
+            return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = {
+            'is_superuser': request.data.get('is_superuser', user.is_superuser)
+        }
+
         serializer = InfoUserSerializer(instance=user, data=data, partial=True)
 
         if serializer.is_valid():
@@ -110,13 +172,14 @@ class UserDetailApiView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+#####################""
 class LoginUserListApiView(APIView):
 
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
         password = request.data.get('password')
 
-        infos = requests.get(f"http://192.168.1.101:8000/users/infos/users/?username={username}")
+        infos = requests.get(f"http://192.168.1.57:8000/users/infos/users/?username={username}")
         infos = infos.json()
         try:
             if username == infos[0]['username'] and password == infos[0]['password']:
@@ -182,9 +245,9 @@ class BanqueDetailApiView(APIView):
             return Response({"response": f"Banque with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
 
         data = {
-            'username': request.data.get('username'),
-            'argent': request.data.get('argent'),
-            'rib': request.data.get('rib'),
+            'username': request.data.get('username') or banques.username,
+            'argent': request.data.get('argent') or banques.argent,
+            'rib': request.data.get('rib') or banques.rib,
         }
         
         serializer = InfoBanqueSerializer(instance=banques, data=data, partial=True)
@@ -193,3 +256,15 @@ class BanqueDetailApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class RibBanqueListApiView(APIView):
+
+    def get(self, request):
+        rib = request.query_params.get('rib')
+        if rib is not None:
+            infosbanque= Banque.objects.filter(rib=rib)
+            print(infosbanque)
+        else:
+            infosbanque= Banque.objects.all()
+        serializer = InfoBanqueSerializer(infosbanque, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
