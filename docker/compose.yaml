@@ -35,7 +35,7 @@ services:
 
   web-rest-2:
     build:
-      context: django-compose-vols/app
+      context: django-compose-vols/makarov_vols
       target: builder
     ports:
       - '8001:8000'
@@ -49,7 +49,7 @@ services:
 
   web-rest-3:
     build:
-      context: django-compose-reservations/app
+      context: django-compose-reservations/makarov_reservations
       target: builder
     ports:
       - '8001:8000'
@@ -63,7 +63,7 @@ services:
 
   web-rest-4:
     build:
-      context: django-compose-structure/app
+      context: django-compose-structure/makarov_structure
       target: builder
     ports:
       - '8001:8000'
@@ -115,6 +115,19 @@ services:
         ipv4_address: 172.21.0.22
     command: python3 script3.py
 ################################
+
+
+##### FRONT DJANGO ######
+  djangopache:
+    build:
+      dockerfile: djangopache-compose/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      my_network:
+        ipv4_address: 172.21.0.30
+#########################
 
 networks:
   my_network:

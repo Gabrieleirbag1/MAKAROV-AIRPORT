@@ -18,6 +18,6 @@ RUN /var/www/html/django-app/djangovenv/bin/python /var/www/html/django-app/mana
 RUN chgrp -R www-data /var/www/html
 RUN a2ensite django-app
 RUN a2dissite 000-default.conf
-RUN service apache2 start
+CMD ["service", "apache2", "start"]
 
 

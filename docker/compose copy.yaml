@@ -100,6 +100,15 @@ services:
     command: python3 script3.py
 ################################
 
+##### FRONT DJANGO ######
+  djangopache:
+    build:
+      dockerfile: djangopache-compose/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - bridge_network
+#########################
 
 networks:
   bridge_network:

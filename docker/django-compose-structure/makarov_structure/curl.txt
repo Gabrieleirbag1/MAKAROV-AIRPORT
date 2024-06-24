@@ -1,0 +1,12 @@
+1. Boeing 777-300ER - 365 - 451 Passengers
+2. Ilyushin II-96 - 300 Passengers
+3. Sukhoi SSJ100 - 87 - 98 Passengers
+4. BOEING 737-800 - 162 - 189 Passengers
+5. AIRBUS A220-300 - 130 - 160 Passengers
+6. AIRBUS A380 - 500 - 853 Passengers
+7. Boeing 747-8 Intercontinental - 467 - 605 Passengers
+8. Airbus A320 - 150 - 186 Passengers
+9. Airbus A350-900 - 325 Passengers
+10. Boeing 787-9 Dreamliner - 296 Passengers
+11. Ilyushin II-86 - 350 Passengers
+12. Boeing 747-400 - 416 - 660 Passengers

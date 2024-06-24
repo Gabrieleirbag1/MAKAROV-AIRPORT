@@ -1,0 +1,7 @@
+curl -X POST -H "Content-Type: application/json" \
+-d '{"vol_ref": 353629857, "user_ref": "johndoe", "demande": false, "annulation": false}' \
+http://localhost:8000/reservations/infos/
+
+curl -X PUT -H "Content-Type: application/json" -d '{"titre":"CHACAL", "commentaire":"as tu déjà vu"}' http://localhost:8000/apirest/api/3/
+
+curl -X PUT -H "Content-Type: application/json" -d '{"vol_ref": 353629857, "demande": "True"}' http://localhost:8000/reservations/infos/2/
