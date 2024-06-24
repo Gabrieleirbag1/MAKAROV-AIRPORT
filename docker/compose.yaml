@@ -7,7 +7,7 @@ services:
     hostname: db
     image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD:
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: makarov_airport
       MYSQL_USER: gab
       MYSQL_PASSWORD: toto
@@ -122,7 +122,6 @@ services:
 networks:
   bridge_network:
     driver: bridge
-
 volumes:
   db-data:
     name: "maria-data"
