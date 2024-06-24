@@ -1,0 +1,53 @@
+footer{
+    z-index: 2;
+    background: white;
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 100%;
+}
+
+
+.w-40{
+    width: 40%;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.flight-card{
+    background-color: rgb(238, 238, 238);
+    border: 2px solid gray;
+    border-radius: 10px;
+
+    padding: 1em;
+
+    width: 40%;
+    max-width: 60%;
+}
+
+.input-containers{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.label{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.value{
+    font-size: 1em;
+}
+
+.buttons div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content:space-around;
+}

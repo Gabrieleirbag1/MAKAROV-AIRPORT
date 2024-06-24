@@ -1,0 +1,43 @@
+{% extends "staff/general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - AIRPORTS</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-show-airports.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  <main>
+
+    {% for airport in airports %}
+        <div class="aiport-card">
+            <h4>{{ airport.nom }}</h4>
+            <span class="span-1">
+                <p>{{ airport.code_pays }}</p>
+                <p>{{ airport.fuseau }}</p>
+            </span>
+            <span class="span-2">
+                <a href={% url "makarov_gp:del_airport" airport_id=airport.id %}><button class="btn btn-danger">delete</button></a>
+                <a href={% url "makarov_gp:edit_airport" airport_id=airport.id %}><button class="btn btn-warning">modify</button></a>
+            </span>
+        </div>
+    {% endfor %}
+
+  </main>
+    
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  {% if message %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endif %}
+
+
+{% endblock content%}

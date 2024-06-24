@@ -1,0 +1,89 @@
+{% extends "staff/general/UI/base.html" %}
+
+{% load static i18n %}
+
+{% block page_title %}
+    <title>Makarov Airlines - FLIGHTS</title>
+{% endblock page_title %}
+
+{% block additionnal_imports %}
+    <link href={% static "libs/assets/css/style-show-flights.css" %} rel="stylesheet">
+{% endblock additionnal_imports %}
+
+{% block content%}
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  <main>
+
+    {% for flight in flights %}
+        <div class="flight-card mt-3">
+
+            <div class="row mt-2">
+                <div class="input-containers col-6">
+                    <p class="label">Departure</p>
+                    <p class="value">{{ flight.aeroport_depart_nom }}</p>
+                </div>
+                <div class="input-containers col-6">
+                    <p class="label">Arrival</p>
+                    <p class="value">{{ flight.aeroport_arrivee_nom }}</p>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="input-containers col-6">
+                    <p class="label">Departure Date</p>
+                    <p class="value">{{ flight.date_depart }}</p>
+                </div>
+                <div class="input-containers col-6">
+                    <p class="label">Arrival Date</p>
+                    <p class="value">{{ flight.date_arrivee }}</p>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="input-containers col-6">
+                    <p class="label">Departure Time</p>
+                    <p class="value">{{ flight.heure_depart }}</p>
+                </div>
+                <div class="input-containers col-6">
+                    <p class="label">Arrival Time</p>
+                    <p class="value">{{ flight.heure_arrivee }}</p>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="input-containers col-4">
+                    <p class="label">Price</p>
+                    <p class="value">{{ flight.prix }}</p>
+                </div>
+                <div class="input-containers col-4">
+                    <p class="label">Type</p>
+                    <p class="value">{{ flight.type }}</p>
+                </div>
+                <div class="input-containers col-4">
+                    <p class="label">Plane</p>
+                    <p class="value">{{ flight.avion_ref }}</p>
+                </div>
+            </div>
+
+            <div class="row mt-2 buttons">
+                <div class="col-12">
+                    <a href={% url "makarov_gp:del_flight" flight_id=flight.id %}><button class="btn btn-danger">delete</button></a>
+                    <a href={% url "makarov_gp:edit_flight" flight_id=flight.id %}><button class="btn btn-warning">modify</button></a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+  </main>
+    
+  <div id="empty-div" style="min-height: 80px;"></div>
+
+  {% if message %}
+  <script>
+    alert("{{ message }}");
+  </script>
+  {% endif %}
+
+
+{% endblock content%}

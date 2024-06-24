@@ -1,0 +1,137 @@
+#: makarov_gp/templates/general/UI/header.html:13
+msgid "Home"
+msgstr "Acceuil"
+
+#: makarov_gp/templates/general/UI/header.html:14
+msgid "About"
+msgstr "A propos"
+
+#: makarov_gp/templates/general/UI/header.html:15
+msgid "Services"
+msgstr "Services"
+
+#: makarov_gp/templates/general/UI/header.html:17
+msgid "Team"
+msgstr "Equipes"
+
+#: makarov_gp/templates/general/UI/header.html:18
+msgid "Flights"
+msgstr "Vols"
+
+#: makarov_gp/templates/general/UI/header.html:20
+msgid "Upcoming Flights"
+msgstr "Vols a venir"
+
+#: makarov_gp/templates/general/UI/header.html:35
+msgid "Contact"
+msgstr "Nous contacter"
+
+#: makarov_gp/templates/general/UI/header.html:37
+msgid "Profile"
+msgstr "Profil"
+
+#: makarov_gp/templates/general/UI/header.html:38
+msgid "Logout"
+msgstr "Deconnexion"
+
+#: makarov_gp/templates/general/UI/header.html:40
+msgid "Login"
+msgstr "Se connecter"
+
+#: makarov_gp/templates/general/UI/header.html:41
+msgid "Register"
+msgstr "S'enregistrer"
+
+#: makarov_gp/templates/general/index.html:27
+msgid "Trip"
+msgstr "Voyage"
+
+#: makarov_gp/templates/general/index.html:29
+#: makarov_gp/templates/general/index.html:42
+#: makarov_gp/templates/general/index.html:73
+#: makarov_gp/templates/general/index.html:143
+msgid "Choose..."
+msgstr "Selectionner.."
+
+#: makarov_gp/templates/general/index.html:30
+msgid "Round-Trip"
+msgstr "Aller-retour"
+
+#: makarov_gp/templates/general/index.html:31
+msgid "One-way ticket"
+msgstr "Aller-simple"
+
+#: makarov_gp/templates/general/index.html:34
+#: makarov_gp/templates/general/index.html:65
+#: makarov_gp/templates/general/index.html:96
+msgid "Please select a valid option."
+msgstr "Merci de selectionner une option valide."
+
+#: makarov_gp/templates/general/index.html:40
+msgid "Departure"
+msgstr "Depart"
+
+#: makarov_gp/templates/general/index.html:71
+msgid "Arrival"
+msgstr "Arrivee"
+
+#: makarov_gp/templates/general/index.html:102
+msgid "Date"
+msgstr "Date"
+
+#: makarov_gp/templates/general/index.html:105
+msgid "Please select a date."
+msgstr "Merci de selectionner une date de voyage."
+
+#: makarov_gp/templates/general/index.html:111
+msgid "Adults"
+msgstr "Adultes"
+
+#: makarov_gp/templates/general/index.html:126
+msgid "Kids"
+msgstr "Enfants"
+
+#: makarov_gp/templates/general/index.html:141
+msgid "Class"
+msgstr "Classe"
+
+#: makarov_gp/templates/general/index.html:144
+msgid "Economy"
+msgstr "Economie"
+
+#: makarov_gp/templates/general/index.html:145
+msgid "Business"
+msgstr "Business"
+
+#: makarov_gp/templates/general/index.html:146
+msgid "First Class"
+msgstr "Premiere Classe"
+
+#: makarov_gp/templates/general/index.html:149
+msgid "Please select a travel class."
+msgstr "Merci de selectionner une classe de voyage."
+
+#: makarov_gp/templates/general/index.html:154
+msgid "Search for a flight"
+msgstr "Rechercher un vol"
+
+#: makarov_gp/templates/general/index.html:165
+msgid "Experience the Sky Like Never Before"
+msgstr "Decouvrir le ciel comme jamais auparavant"
+
+#: makarov_gp/templates/general/index.html:166
+msgid "Makarov Airlines - Where Every Journey is as Memorable as the Destination."
+msgstr "Makarov Airlines - Ou chaque voyage est aussi memorable que la destination"
+
+#: makarov_gp/templates/general/index.html:167
+#: makarov_gp/templates/general/index.html:177
+msgid "Get Started"
+msgstr "Commencer"
+
+#: makarov_gp/templates/general/index.html:175
+msgid "Fly Beyond Borders"
+msgstr "Voler sans frontieres"
+
+#: makarov_gp/templates/general/index.html:176
+msgid "With us, you don't have to worry about feeling restrained, just leave !"
+msgstr "Pas de restrictions avec nous, allez ou vous voulez quand vous voulez !"
