@@ -109,8 +109,20 @@ class UserDetailApiView(APIView):
         if serializer.is_valid():
             response = requests.get(f"http://172.21.0.8:8001/users/infos/banque/?username={old_username}")
             id = response.json()[0]['id']
-            response = requests.get(f"http://172.21.0.4:8004/structure/infos/staff/?user_ref={old_username}")
-            id_staff = response.json()[0]['id']
+            try :
+                response = requests.get(f"http://172.21.0.4:8004/structure/infos/staff/?user_ref={old_username}")
+                id_staff = response.json()[0]['id']
+            except IndexError:
+                id_staff = None
+            try :
+                ids_res = []
+                response = requests.get(f"http://172.21.0.3:8003/reservations/infos/user_vols/?user_ref={old_username}")
+                reservations = response.json()
+                for reservation in reservations:
+                    ids_res.append(reservation['id'])
+            except IndexError:
+                print("error")
+                ids_res = None
 
             headers = {'Content-Type': 'application/json'}
 
@@ -119,10 +131,18 @@ class UserDetailApiView(APIView):
             }
             response = requests.put(f"http://172.21.0.8:8001/users/infos/banque/{id}/", data=json.dumps(data), headers=headers)
             
-            data = {
-                'user_ref': request.data.get('username', user.username),
-            }
-            response = requests.put(f"http://172.21.0.4:8004/structure/infos/staff/{id_staff}/", data=json.dumps(data), headers=headers)
+            if id_staff:
+                data = {
+                    'user_ref': request.data.get('username', user.username),
+                }
+                response = requests.put(f"http://172.21.0.4:8004/structure/infos/staff/{id_staff}/", data=json.dumps(data), headers=headers)
+
+            if ids_res:
+                data = {
+                    'user_ref': request.data.get('username', user.username),
+                }
+                for id_res in ids_res:
+                    response = requests.put(f"http://172.21.0.3:8003/reservations/infos/{id_res}/", data=json.dumps(data), headers=headers)
 
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
