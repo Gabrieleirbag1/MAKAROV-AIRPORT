@@ -10,9 +10,17 @@ from django.forms.models import model_to_dict
 
 # Create your views here.
 def index(request):
+    """index() : redirige vers la page d'informations de vol
+    
+    Args:
+        request (HttpRequest): requête HTTP"""
     return HttpResponseRedirect('/infos/')
 
 def bool_convert(value):
+    """bool_convert() : convertit une chaine de caractère en booléen
+    
+    Args:
+        value (str): chaine de caractère à convertir"""
     if value == 'True':
         return True
     return False
@@ -20,6 +28,10 @@ def bool_convert(value):
 class ReservationsListApiView(APIView):
 
     def get(self, request):        
+        """get() : get tous les enregistrements d'informations de vol ou un enregistrement d'informations de vol par vol_ref
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         vol_ref = request.query_params.get('vol_ref')
         if vol_ref is not None:
             reservation = Reservations.objects.filter(vol_ref=vol_ref).first()
@@ -34,6 +46,7 @@ class ReservationsListApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         
     def post(self, request, *args, **kwargs):
+        """post() : crée un nouvel enregistrement d'informations de vol"""
         data = {
             'vol_ref': request.data.get('vol_ref'),
             'user_ref': request.data.get('user_ref'),
@@ -48,8 +61,13 @@ class ReservationsListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class ReservationsDetailApiView(APIView):
-
+    """ReservationsDetailApiView() : APIView pour les informations de vol"""
     def get(self, request, id, *args, **kwargs):
+        """get() : get les informations d'un vol
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'information de vol à récupérer"""
         inforeservations= Reservations.objects.get(id=id)
         if not inforeservations:
             return Response({"response": f"InfosAlbum with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -58,6 +76,11 @@ class ReservationsDetailApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, id, *args, **kwargs):
+        """delete() : supprime les informations d'un vol
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'information de vol à supprimer"""
         inforeservations= Reservations.objects.get(id=id)
         if not inforeservations:
             return Response({"response": f"InfosAlbum with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -66,6 +89,11 @@ class ReservationsDetailApiView(APIView):
         return Response({"response": f"InfosAlbum with id #{id} deleted successfully"}, status=status.HTTP_200_OK)
     
     def put(self, request, id, *args, **kwargs):
+        """put() : update les informations d'un vol
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'information de vol à mettre à jour"""
         inforeservations= Reservations.objects.get(id=id)
         if not inforeservations:
             return Response({"response": f"InfosAlbum with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -86,8 +114,12 @@ class ReservationsDetailApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class UserVolsListApiView(APIView):
-
+    """UserVolsListApiView() : APIView pour les vols d'un utilisateur"""
     def get(self, request):
+        """get() : get tous les vols d'un utilisateur
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         user_ref = request.query_params.get('user_ref')
         if user_ref is not None:
             infosvols= Reservations.objects.filter(user_ref=user_ref)

@@ -10,11 +10,19 @@ import requests, json
 
 # Create your views here.
 def index(request):
+    """index() : redirige vers la page d'informations de vol
+    
+    Args:
+        request (HttpRequest): requête HTTP"""
     return HttpResponseRedirect('/infos/')
 
 class AvionsListApiView(APIView):
-
+    """AvionsListApiView() : APIView pour les informations de vol"""
     def get(self, request):
+        """get() : get tous les enregistrements d'informations de vol ou un enregistrement d'informations de vol par vol_ref
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         modele = request.query_params.get('modele')
         if modele is not None:
             infosavions= Avions.objects.filter(modele=modele)
@@ -25,6 +33,10 @@ class AvionsListApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
         
     def post(self, request, *args, **kwargs):
+        """post() : crée un nouvel enregistrement d'informations de vol
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         data = {
             'marque': request.data.get('marque'),
             'modele': request.data.get('modele'),
@@ -40,8 +52,13 @@ class AvionsListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class AvionsDetailApiView(APIView):
-
+    """AvionsDetailApiView() : APIView pour les informations de vol"""
     def get(self, request, id, *args, **kwargs):
+        """get() : get un enregistrement d'informations de vol par id
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'enregistrement d'informations de vol à récupérer"""
         infoavion= Avions.objects.get(id=id)
         if not infoavion:
             return Response({"response": f"InfosAlbum with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -51,6 +68,10 @@ class AvionsDetailApiView(APIView):
     
 
     def delete(self, request, id, *args, **kwargs):
+        """delete() : supprime un enregistrement d'informations de vol par id
+
+        Args:
+            request (HttpRequest): requête HTTP"""
         infoavion= Avions.objects.get(id=id)
         if not infoavion:
             return Response({"response": f"InfosAlbum with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -59,6 +80,11 @@ class AvionsDetailApiView(APIView):
         return Response({"response": f"InfosAlbum with id #{id} deleted successfully"}, status=status.HTTP_200_OK)
     
     def put(self, request, id, *args, **kwargs):
+        """put() : met à jour un enregistrement d'informations de vol par id
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'enregistrement d'informations de vol à mettre à jour"""
         infoavion= Avions.objects.get(id=id)
         if not infoavion:
             return Response({"response": f"InfosAlbum with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -79,8 +105,9 @@ class AvionsDetailApiView(APIView):
 #####################################################################
     
 class StaffListApiView(APIView):
-
+    """StaffListApiView() : APIView pour les informations de staff"""
     def get(self, request):
+        """get() : get tous les enregistrements d'informations de staff ou un enregistrement d'informations de staff par user_ref"""
         user_ref = request.query_params.get('user_ref')
         if user_ref is not None:
             infosstaff= Staff.objects.filter(user_ref=user_ref)
@@ -91,6 +118,7 @@ class StaffListApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
         
     def post(self, request, *args, **kwargs):
+        """post() : crée un nouvel enregistrement d'informations de staff"""
         data = {
             'user_ref': request.data.get('user_ref'),
             'aeroport_ref': request.data.get('aeroport_ref'),
@@ -113,8 +141,13 @@ class StaffListApiView(APIView):
 
 
 class StaffDetailApiView(APIView):
-
+    """StaffDetailApiView() : APIView pour les informations de staff"""
     def get(self, request, id, *args, **kwargs):
+        """get() : get les informations d'un staff
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'information de staff à récupérer"""
         infosstaff= Staff.objects.get(id=id)
         if not infosstaff:
             return Response({"response": f"InfosStaff with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -123,6 +156,11 @@ class StaffDetailApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, id, *args, **kwargs):
+        """delete() : supprime les informations d'un staff
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'information de staff à supprimer"""
         infosstaff= Staff.objects.get(id=id)
         if not infosstaff:
             return Response({"response": f"InfosStaff with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -141,6 +179,11 @@ class StaffDetailApiView(APIView):
         return Response({"response": f"InfosStaff with id #{id} deleted successfully"}, status=status.HTTP_200_OK)
     
     def put(self, request, id, *args, **kwargs):
+        """put() : update les informations d'un staff
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'information de staff à mettre à jour"""
         infosstaff= Staff.objects.get(id=id)
         if not infosstaff:
             return Response({"response": f"InfosStaff with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -164,13 +207,21 @@ class StaffDetailApiView(APIView):
 ###############################################################
 
 class AeroportsListApiView(APIView):
-    
+    """AeroportsListApiView() : APIView pour les informations d'aeroport"""
     def get(self, request):
+        """get() : get tous les enregistrements d'informations d'aeroport ou un enregistrement d'informations d'aeroport par code_pays
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         infosaeroport= Aeroports.objects.all()
         serializer = InfoAeroportsSerializer(infosaeroport, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
         
     def post(self, request, *args, **kwargs):
+        """post() : crée un nouvel enregistrement d'informations d'aeroport
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         data = {
             'nom': request.data.get('nom'),
             'code_pays': request.data.get('code_pays'),
@@ -186,8 +237,13 @@ class AeroportsListApiView(APIView):
         
 
 class AeroportsDetailApiView(APIView):
-
+    """AeroportsDetailApiView() : APIView pour les informations d'aeroport"""
     def get(self, request, id, *args, **kwargs):
+        """get() : get un enregistrement d'informations d'aeroport par id
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'enregistrement d'informations d'aeroport à récupérer"""
         infosaeroport= Aeroports.objects.get(id=id)
         if not infosaeroport:
             return Response({"response": f"InfosAeroport with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -197,6 +253,11 @@ class AeroportsDetailApiView(APIView):
     
 
     def delete(self, request, id, *args, **kwargs):
+        """delete() : supprime un enregistrement d'informations d'aeroport par id
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'enregistrement d'informations d'aeroport à supprimer"""
         infosaeroport= Aeroports.objects.get(id=id)
         if not infosaeroport:
             return Response({"response": f"InfosAeroport with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -205,6 +266,11 @@ class AeroportsDetailApiView(APIView):
         return Response({"response": f"InfosAeroport with id #{id} deleted successfully"}, status=status.HTTP_200_OK)
     
     def put(self, request, id, *args, **kwargs):
+        """put() : met à jour un enregistrement d'informations d'aeroport par id
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'enregistrement d'informations d'aeroport à mettre à jour"""
         infosaeroport= Aeroports.objects.get(id=id)
         if not infosaeroport:
             return Response({"response": f"InfosAeroport with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)

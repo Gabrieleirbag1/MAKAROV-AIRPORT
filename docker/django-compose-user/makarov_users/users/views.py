@@ -12,18 +12,30 @@ from copy import deepcopy
 
 # Create your views here.
 def index(request):
+    """index() : redirige vers la page d'informations de vol
+    
+    Args:
+        request (HttpRequest): requête HTTP"""
     response = PublishBank().setup()
     print(response)
     return HttpResponseRedirect('infos/')
 
 def bool_convert(value):
+    """bool_convert() : convertit une chaine de caractère en booléen
+    
+    Args:
+        value (str): chaine de caractère à convertir"""
     if value == 'True':
         return True
     return False
 
 class UserListApiView(APIView):
-
+    """UserListApiView() : Vue pour la gestion des utilisateurs"""
     def get(self, request):
+        """get() : get tous les enregistrements d'utilisateurs ou un enregistrement d'utilisateur par username
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         username = request.query_params.get('username')
         if username is not None:
             infosuser= UserProfile.objects.filter(username=username)
@@ -34,7 +46,10 @@ class UserListApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request, *args, **kwargs):
-
+        """post() : crée un nouvel enregistrement d'utilisateur
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         data = {
             'username': request.data.get('username'),
             'first_name': request.data.get('first_name'),
@@ -53,6 +68,10 @@ class UserListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def post_bank_info(self, username):
+        """post_bank_info() : crée un nouvel enregistrement d'information de la banque
+        
+        Args:
+            username (str): nom d'utilisateur de l'utilisateur"""
         argent = random.randint(800, 3000)
         rib = random.randint(00000000, 99999999)
         url = 'http://172.21.0.8:8001/users/infos/banque/'
@@ -71,8 +90,13 @@ class UserListApiView(APIView):
             print(f'Erreur lors de la création de l\'information de la banque: {response.content}')
     
 class UserDetailApiView(APIView):
-
+    """UserDetailApiView() : Vue pour les informations d'un utilisateur"""
     def get(self, request, id, *args, **kwargs):
+        """get() : get les informations d'un utilisateur
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'utilisateur à récupérer"""
         users= UserProfile.objects.get(id=id)
         if not users:
             return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -82,6 +106,11 @@ class UserDetailApiView(APIView):
     
 
     def delete(self, request, id, *args, **kwargs):
+        """delete() : supprime les informations d'un utilisateur
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'utilisateur à supprimer"""
         users= UserProfile.objects.get(id=id)
         if not users:
             return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -90,6 +119,11 @@ class UserDetailApiView(APIView):
         return Response({"response": f"UserProfile with id #{id} deleted successfully"}, status=status.HTTP_200_OK)
     
     def put(self, request, id, *args, **kwargs):
+        """put() : update les informations d'un utilisateur
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'utilisateur à mettre à jour"""
         try:
             user = UserProfile.objects.get(id=id)
         except UserProfile.DoesNotExist:
@@ -151,8 +185,12 @@ class UserDetailApiView(APIView):
     
 #############################################################""
 class SuperUserApiView(APIView):
-
+    """SuperUserApiView() : Vue pour les informations d'un super utilisateur"""
     def get(self, request):
+        """get() : get tous les enregistrements d'utilisateurs ou un enregistrement d'utilisateur par username
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         username = request.query_params.get('username')
         if username is not None:
             infosuser= UserProfile.objects.filter(username=username)
@@ -163,11 +201,20 @@ class SuperUserApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request):
+        """post() : crée un nouvel enregistrement d'utilisateur
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         return
 
 class SuperUserDetailApiView(APIView):
-
+    """SuperUserDetailApiView() : Vue pour les informations d'un super utilisateur"""
     def get(self, request, id, *args, **kwargs):
+        """get() : get les informations d'un utilisateur
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'utilisateur à récupérer"""
         users= UserProfile.objects.get(id=id)
         if not users:
             return Response({"response": f"UserProfile with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -176,6 +223,11 @@ class SuperUserDetailApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def put(self, request, id, *args, **kwargs):
+        """put() : update les informations d'un utilisateur
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'utilisateur à mettre à jour"""
         try:
             user = UserProfile.objects.get(id=id)
         except UserProfile.DoesNotExist:
@@ -195,8 +247,12 @@ class SuperUserDetailApiView(APIView):
 
 #####################""
 class LoginUserListApiView(APIView):
-
+    """LoginUserListApiView() : Vue pour la connexion d'un utilisateur"""
     def post(self, request, *args, **kwargs):
+        """post() : connecte un utilisateur
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         username = request.data.get('username')
         password = request.data.get('password')
 
@@ -214,8 +270,12 @@ class LoginUserListApiView(APIView):
 #######################################################""
 
 class BanqueListApiView(APIView):
-
+    """BanqueListApiView() : Vue pour la gestion des informations de la banque"""
     def get(self, request):
+        """get() : get tous les enregistrements d'informations de la banque ou un enregistrement d'information de la banque par username
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         username = request.query_params.get('username')
         if username is not None:
             infosbanque= Banque.objects.filter(username=username)
@@ -226,7 +286,10 @@ class BanqueListApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request, *args, **kwargs):
-
+        """post() : crée un nouvel enregistrement d'information de la banque
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         data = {
             'username': request.data.get('username'),
             'argent': request.data.get('argent'),
@@ -242,8 +305,13 @@ class BanqueListApiView(APIView):
     
 
 class BanqueDetailApiView(APIView):
-    
+    """BanqueDetailApiView() : Vue pour les informations d'une banque"""
     def get(self, request, id, *args, **kwargs):
+        """get() : get les informations d'une banque
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'information de la banque à récupérer"""
         banques= Banque.objects.get(id=id)
         if not banques:
             return Response({"response": f"Banque with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -252,6 +320,11 @@ class BanqueDetailApiView(APIView):
     
 
     def delete(self, request, id, *args, **kwargs):
+        """delete() : supprime les informations d'une banque
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'information de la banque à supprimer"""
         banques= Banque.objects.get(id=id)
         if not banques:
             return Response({"response": f"Banque with id #{id} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -260,6 +333,11 @@ class BanqueDetailApiView(APIView):
         return Response({"response": f"Banque with id #{id} deleted successfully"}, status=status.HTTP_200_OK)
     
     def put(self, request, id, *args, **kwargs):
+        """put() : update les informations d'une banque
+        
+        Args:
+            request (HttpRequest): requête HTTP
+            id (int): id de l'information de la banque à mettre à jour"""
         try:
             banques = Banque.objects.get(id=id)
         except Banque.DoesNotExist:
@@ -279,8 +357,12 @@ class BanqueDetailApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class RibBanqueListApiView(APIView):
-
+    """RibBanqueListApiView() : Vue pour la gestion des informations de la banque par rib"""
     def get(self, request):
+        """get() : get tous les enregistrements d'informations de la banque ou un enregistrement d'information de la banque par rib
+        
+        Args:
+            request (HttpRequest): requête HTTP"""
         rib = request.query_params.get('rib')
         if rib is not None:
             infosbanque= Banque.objects.filter(rib=rib)
